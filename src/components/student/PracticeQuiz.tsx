@@ -8,11 +8,42 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { CheckCircle2, XCircle, Loader2 } from 'lucide-react';
-import { TOPICS, QUIZ_QUESTIONS } from '@/lib/data';
+import { TOPICS } from '@/lib/data';
 import type { QuizQuestion } from '@/lib/types';
 import { generatePracticeQuiz } from '@/ai/flows/generate-practice-quiz';
+import { useToast } from '@/hooks/use-toast';
 
 type QuizState = 'initial' | 'loading' | 'active' | 'submitted';
+
+// Helper function to parse the AI-generated quiz string
+function parseQuiz(quizString: string): QuizQuestion[] {
+  try {
+    const questions: QuizQuestion[] = [];
+    const questionBlocks = quizString.split(/\d+\.\s+/).filter(Boolean);
+
+    questionBlocks.forEach((block, index) => {
+      const lines = block.trim().split('\n');
+      const questionText = lines[0];
+      const options = lines.slice(1, -1).map(line => line.replace(/^[a-d]\)\s*/, ''));
+      const correctAnswerLine = lines.slice(-1)[0];
+      const correctAnswerMatch = correctAnswerLine.match(/Correct Answer: [a-d]\) (.+)/);
+      const correctAnswer = correctAnswerMatch ? correctAnswerMatch[1] : '';
+
+      if (questionText && options.length > 0 && correctAnswer) {
+        questions.push({
+          id: `q${index + 1}`,
+          question: questionText,
+          options: options,
+          correctAnswer: correctAnswer,
+        });
+      }
+    });
+    return questions;
+  } catch (error) {
+    console.error('Failed to parse quiz string:', error);
+    return [];
+  }
+}
 
 export function PracticeQuiz() {
   const [quizState, setQuizState] = useState<QuizState>('initial');
@@ -20,23 +51,29 @@ export function PracticeQuiz() {
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [score, setScore] = useState<number | null>(null);
+  const { toast } = useToast();
 
   const handleGenerateQuiz = async () => {
     if (!selectedTopic) return;
     setQuizState('loading');
     
-    // This is a mock. In a real app, the AI would generate questions.
-    // We can still call the flow to simulate the process.
     try {
-        await generatePracticeQuiz({ topic: selectedTopic });
+        const result = await generatePracticeQuiz({ topic: selectedTopic });
+        const parsedQuestions = parseQuiz(result.quiz);
+        if (parsedQuestions.length === 0) {
+          throw new Error("Failed to parse the generated quiz.");
+        }
+        setQuestions(parsedQuestions);
+        setQuizState('active');
     } catch (e) {
-        console.error("AI flow for quiz generation failed, using mock data.", e);
+        console.error("AI flow for quiz generation failed.", e);
+        toast({
+            variant: "destructive",
+            title: "Oh no! Something went wrong.",
+            description: "There was a problem generating the quiz. Please try again.",
+        });
+        setQuizState('initial');
     }
-
-    setTimeout(() => {
-      setQuestions(QUIZ_QUESTIONS);
-      setQuizState('active');
-    }, 1000);
   };
 
   const handleAnswerChange = (questionId: string, value: string) => {
@@ -93,7 +130,7 @@ export function PracticeQuiz() {
         {quizState === 'loading' && (
             <div className="flex flex-col items-center justify-center space-y-4 h-48">
                 <Loader2 className="h-12 w-12 animate-spin text-primary" />
-                <p className="text-muted-foreground">Generating your quiz...</p>
+                <p className="text-muted-foreground">Generating your quiz on {selectedTopic}...</p>
             </div>
         )}
 
