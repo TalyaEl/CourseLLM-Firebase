@@ -6,6 +6,7 @@
 import { courseModel } from '../genkit'; 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
+import { analyzeMessageFlow } from './analyze-message';
 
 const SocraticCourseChatInputSchema = z.object({
   courseMaterial: z
@@ -58,7 +59,7 @@ Student Question:
 Response:`,
 });
 
-const socraticCourseChatFlow = ai.defineFlow(
+export const socraticCourseChatFlow = ai.defineFlow(
   {
     name: 'socraticCourseChatFlow',
     inputSchema: SocraticCourseChatInputSchema,
@@ -75,6 +76,16 @@ const socraticCourseChatFlow = ai.defineFlow(
     if (!complianceResult) {
       return { response: 'I am unable to provide a compliant response based on the course materials.' };
     }
+
+    // Fire-and-forget analysis to store intent/skills in PostgreSQL
+    // We generate temporary IDs here for testing until the frontend passes real context
+    analyzeMessageFlow({
+        message: input.studentQuestion,
+        threadId: `session-${Date.now()}`,
+        messageId: `msg-${Date.now()}-${Math.random().toString(36).substring(7)}`
+    }).catch(err => {
+        console.error("Background message analysis failed:", err);
+    });
 
     return output!;
   }

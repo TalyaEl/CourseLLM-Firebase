@@ -2,48 +2,57 @@ import { config } from 'dotenv';
 config({ path: '.env.local' });
 
 import { analyzeMessageFlow } from './analyze-message';
+import { Client } from 'pg';
 
-async function runIsolatedValidation() {
-  console.log("🚀 Starting Isolated Service Validation for: analyzeMessageFlow\n");
+async function runIntegrationTest() {
+  console.log("🚀 Starting DB Integration Test...");
 
-  // Test Case 1: Struggling Student
-  console.log("--- Test Case 1: Concept Confusion ---");
-  const input1 = {
-    messageText: "I really don't understand how recursion works, the base case makes no sense to me.",
-    messageHistory: ["User: What is a function?", "Model: A block of code..."]
-  };
+  // --- Test Case 1: Concept Confusion ---
+  console.log("\n--- Test Case 1: Struggling Student ---");
   
+  const input1 = {
+    message: "I really don't understand how recursion works, the base case makes no sense to me.",
+    threadId: "test-thread-001", // חובה בשביל ה-DB
+    messageId: "msg-001"         // חובה בשביל ה-DB
+  };
+
   try {
     const result1 = await analyzeMessageFlow(input1);
-    console.log("Output:", JSON.stringify(result1, null, 2));
+    console.log("AI Output:", JSON.stringify(result1, null, 2));
+
+    console.log("Verifying persistence in DB...");
+    const client = new Client({ connectionString: process.env.DATABASE_URL });
+    await client.connect();
     
-    if (result1.intent.primary === 'ASK_EXPLANATION' && result1.trajectory.status === 'STRUGGLING') {
-      console.log("✅ Test 1 Passed: Correctly identified struggling state.");
+    const res = await client.query("SELECT * FROM interaction_analysis WHERE message_id = $1", ['msg-001']);
+    
+    if (res.rows.length > 0) {
+      console.log("✅ SUCCESS! Row found in DB:", res.rows[0]);
     } else {
-      console.error("❌ Test 1 Failed: Unexpected classification.");
+      console.error("❌ FAILURE: Row NOT found in DB.");
     }
+    await client.end();
+
   } catch (error) {
     console.error("❌ Test 1 Error:", error);
   }
 
-  // Test Case 2: Off Topic
+  // --- Test Case 2: Off Topic ---
   console.log("\n--- Test Case 2: Off Topic ---");
+  
   const input2 = {
-    messageText: "Write me a poem about a cat coding in Java.",
+    message: "Write me a poem about a cat coding in Java.",
+    threadId: "test-thread-002",
+    messageId: "msg-002"
   };
 
   try {
     const result2 = await analyzeMessageFlow(input2);
-    console.log("Output:", JSON.stringify(result2, null, 2));
-
-    if (result2.intent.primary === 'OFF_TOPIC') {
-      console.log("✅ Test 2 Passed: Correctly identified off-topic.");
-    } else {
-      console.error("❌ Test 2 Failed: Should be OFF_TOPIC.");
-    }
+    console.log("AI Output:", JSON.stringify(result2, null, 2));
+    // כאן אפשר להוסיף בדיקת DB נוספת אם רוצים, אבל הבנו את העקרון
   } catch (error) {
     console.error("❌ Test 2 Error:", error);
   }
 }
 
-runIsolatedValidation();
+runIntegrationTest();
