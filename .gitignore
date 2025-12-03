@@ -1,0 +1,125 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# ============================================================================
+# Node.js / Next.js
+# ============================================================================
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js build output
+/.next/
+/out/
+
+# production
+/build
+/dist
+
+# misc
+.DS_Store
+*.pem
+
+# debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# genkit
+.genkit/*
+
+# ============================================================================
+# Python / DSPy Service
+# ============================================================================
+
+# Python virtual environments
+.venv/
+venv/
+dspy_service/.venv/
+dspy_service/venv/
+env/
+ENV/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Python egg info
+*.egg-info/
+dist/
+build/
+
+# Pytest cache
+.pytest_cache/
+
+# ============================================================================
+# Environment Variables & Secrets (NEVER COMMIT THESE!)
+# ============================================================================
+
+# Next.js environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+
+# Python/DSPy service environment variables
+dspy_service/.env
+dspy_service/.env.local
+
+# Allow example env files for documentation
+!.env.example
+!dspy_service/.env.example
+
+# ============================================================================
+# Firebase
+# ============================================================================
+
+firebase-debug.log
+firestore-debug.log
+firebase-debug.*.log
+
+# ============================================================================
+# IST Pipeline - Local Development Data
+# ============================================================================
+
+# JSON storage for demo mode (contains generated IST events)
+src/mocks/ist/events.json
+
+# ============================================================================
+# Operating System Files
+# ============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
