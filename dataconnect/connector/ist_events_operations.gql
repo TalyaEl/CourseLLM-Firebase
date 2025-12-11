@@ -1,0 +1,50 @@
+# List IST events for a given user and course, newest first
+query IstEventsByUserAndCourse(
+  $userId: String!
+  $courseId: String!
+) @auth(level: PUBLIC, insecureReason: "Dev demo: list IST events for a course") {
+  istEvents(
+    where: {
+      userId: { eq: $userId }
+      courseId: { eq: $courseId }
+    }
+    orderBy: { createdAt: DESC }
+  ) {
+    id
+    userId
+    courseId
+    threadId
+    messageId
+    utterance
+    intent
+    skills
+    trajectory
+    createdAt
+  }
+}
+
+# Create a new IST event record
+mutation CreateIstEvent(
+  $userId: String!
+  $courseId: String!
+  $threadId: String!
+  $messageId: String!
+  $utterance: String!
+  $intent: String!
+  $skills: Any
+  $trajectory: Any
+) @auth(level: PUBLIC, insecureReason: "Dev demo: write IST events from backend") {
+  istEvent_insert(
+    data: {
+      userId: $userId
+      courseId: $courseId
+      threadId: $threadId
+      messageId: $messageId
+      utterance: $utterance
+      intent: $intent
+      skills: $skills
+      trajectory: $trajectory
+      # createdAt will use the default(expr: "request.time")
+    }
+  )
+}

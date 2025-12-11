@@ -1,0 +1,18 @@
+# Minimal Firebase Data Connect service config for local development.
+specVersion: "1.0.0"
+serviceId: "coursewise-ist-service"
+location: "us-central1"
+schema:
+  # For now, we’ll keep the default ./schema directory (relative to this file).
+  source: "./schema"
+  # Datasource config will be filled in properly when we wire a real Cloud SQL instance.
+  datasource:
+    postgresql:
+      database: "COURSEWISE_IST_PLACEHOLDER"
+      cloudSql:
+        instanceId: "COURSEWISE_IST_INSTANCE_PLACEHOLDER"
+        # Leave schemaValidation commented for now; we’ll refine later.
+        # schemaValidation: "COMPATIBLE"
+# List of connector directories. Each MUST contain a connector.yaml file.
+connectorDirs:
+  - "./connector"

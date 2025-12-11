@@ -1,0 +1,11 @@
+# Connector-level config for the CourseWise IST connector.
+connectorId: "coursewise-ist-connector"
+generate:
+  javascriptSdk:
+    - outputDir: "../../src/dataconnect-generated"
+      package: "@dataconnect/generated"
+      packageJsonDir: "../../"
+      react: true
+    - outputDir: "../../functions/src/dataconnect-generated"
+      package: "@dataconnect/functions-generated"
+      packageJsonDir: "../../functions"

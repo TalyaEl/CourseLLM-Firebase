@@ -323,6 +323,18 @@ Expected response:
 - [ ] Support multi-language student utterances (currently works but intent is in English)
 - [ ] Add RAG (Retrieval-Augmented Generation) for course-specific knowledge
 
+## 📚 Documentation & Reports
+
+Detailed documentation and status reports are available in the [docs/](./docs/) folder.
+
+- **Repository Overview**: [REPOSITORY_OVERVIEW.md](./docs/REPOSITORY_OVERVIEW.md) - A map of the entire codebase.
+- **Data Pipes Report**: [Database-Data-Pipes-Report.md](./docs/Database-Data-Pipes-Report.md)
+- **Status Snapshots**:
+    - [Dec 9, 2025](./docs/IST_Pipeline_Status_Snapshot_2025-12-09.md)
+    - [Dec 6, 2025](./docs/IST%20Pipeline%20Status%20Snapshot%20-%202025-12-06.md)
+    - [Dec 1, 2025](./docs/ist-pipeline-status-2025-12-01.md)
+    - [Nov 30, 2025](./docs/IST-status-snapshot-2025-11-30.md)
+
 ## 📄 License
 
 Private educational project - not for redistribution.

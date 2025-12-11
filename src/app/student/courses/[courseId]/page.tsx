@@ -57,7 +57,7 @@ export default async function CourseDetailPage({ params }: PageProps) {
                 </CardContent>
             </Card>
             <div className="h-full">
-                <ChatPanel courseMaterial={courseMaterialString} />
+                <ChatPanel courseMaterial={courseMaterialString} courseId={courseId} />
             </div>
         </div>
     </div>

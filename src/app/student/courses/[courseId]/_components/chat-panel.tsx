@@ -10,17 +10,21 @@ import { cn } from "@/lib/utils";
 import { Bot, Loader2, Send } from "lucide-react";
 import { useState, useRef, useEffect, useTransition } from "react";
 import type { FormEvent } from "react";
+import { analyzeAndStoreIstForMessage } from "@/lib/ist/chatIst";
+import IntentInspector from "@/components/IntentInspector";
 
 type Message = {
   role: "user" | "bot";
   text: string;
+  id?: string; // Add id for tracking messageId
 };
 
 type ChatPanelProps = {
   courseMaterial: string;
+  courseId?: string; // Add courseId prop
 };
 
-export function ChatPanel({ courseMaterial }: ChatPanelProps) {
+export function ChatPanel({ courseMaterial, courseId }: ChatPanelProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isPending, startTransition] = useTransition();
@@ -30,15 +34,34 @@ export function ChatPanel({ courseMaterial }: ChatPanelProps) {
     e.preventDefault();
     if (!input.trim()) return;
 
-    const userMessage: Message = { role: "user", text: input };
+    // Generate threadId and messageId for IST analysis
+    const threadId = courseId ? `demo-thread-${courseId}` : 'demo-thread-standalone';
+    const messageId = `msg-${Date.now().toString()}`;
+    const messageText = input.trim();
+
+    const userMessage: Message = { role: "user", text: messageText, id: messageId };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
+
+    // Fire-and-forget IST analysis (non-blocking)
+    analyzeAndStoreIstForMessage({
+      threadId,
+      messageId,
+      courseId: courseId ?? undefined,
+      language: 'en',
+      maxHistoryMessages: 5,
+      messageText,
+    }).catch((err) => {
+      console.error('[IST] analyzeAndStoreIstForMessage failed', err);
+    });
+
+    console.log('[IST] analyzeAndStoreIstForMessage for', { threadId, messageId, courseId });
 
     startTransition(async () => {
         try {
             const result = await socraticCourseChat({
                 courseMaterial,
-                studentQuestion: input,
+                studentQuestion: messageText,
             });
             const botMessage: Message = { role: "bot", text: result.response };
             setMessages((prev) => [...prev, botMessage]);
@@ -85,15 +108,25 @@ export function ChatPanel({ courseMaterial }: ChatPanelProps) {
                     <AvatarFallback><Bot size={20}/></AvatarFallback>
                   </Avatar>
                 )}
-                <div
-                  className={cn(
-                    "max-w-xs md:max-w-md lg:max-w-lg rounded-lg px-4 py-2",
-                    message.role === "user"
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted"
+                <div className="flex flex-col gap-2">
+                  <div
+                    className={cn(
+                      "max-w-xs md:max-w-md lg:max-w-lg rounded-lg px-4 py-2",
+                      message.role === "user"
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-muted"
+                    )}
+                  >
+                    <p className="text-sm whitespace-pre-wrap">{message.text}</p>
+                  </div>
+                  {message.role === "user" && message.id && (
+                    <div className="text-xs">
+                      <IntentInspector
+                        threadId={courseId ? `demo-thread-${courseId}` : 'demo-thread-standalone'}
+                        messageId={message.id}
+                      />
+                    </div>
                   )}
-                >
-                  <p className="text-sm whitespace-pre-wrap">{message.text}</p>
                 </div>
                  {message.role === "user" && (
                   <Avatar className="h-8 w-8">

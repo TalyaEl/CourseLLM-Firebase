@@ -8,6 +8,15 @@
     },
     "firestore": {
       "port": 8080
+    },
+    "extensions": {
+      "port": 9199
+    },
+    "dataconnect": {
+      "port": 9399
     }
+  },
+  "dataconnect": {
+    "source": "dataconnect"
   }
 }
