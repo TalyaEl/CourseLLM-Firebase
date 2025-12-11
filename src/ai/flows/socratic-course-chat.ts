@@ -80,7 +80,25 @@ const socraticCourseChatFlow = ai.defineFlow(
     outputSchema: SocraticCourseChatOutputSchema,
   },
   async input => {
-    const { output } = await socraticPrompt(input);
+    let output: SocraticCourseChatOutput | null = null;
+
+    try {
+      const result = await socraticPrompt(input);
+      output = result.output;
+    } catch (err: any) {
+      console.error(
+        '[socratic-course-chat] socraticPrompt failed, returning fallback tutor message instead of throwing:',
+        err
+      );
+
+      // IMPORTANT: do NOT rethrow the error here.
+      // Return a fallback response so the UI does not crash.
+      return {
+        response:
+          'The AI tutor is temporarily unavailable because the upstream model is overloaded (503). '
+          + 'Your question was still processed for IST analysis – please try again in a bit.',
+      };
+    }
 
     const complianceResult = await enforceCompliance({
       courseMaterial: input.courseMaterial,
@@ -88,7 +106,10 @@ const socraticCourseChatFlow = ai.defineFlow(
     });
 
     if (!complianceResult) {
-      return { response: 'I am unable to provide a compliant response based on the course materials.' };
+      return {
+        response:
+          'I am unable to provide a compliant response based on the course materials.',
+      };
     }
 
     return output!;

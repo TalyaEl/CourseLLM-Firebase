@@ -3,6 +3,7 @@ import { getFirestore } from './firebaseAdmin';
 import type { AnalyzeMessageRequest } from './types/analyzeMessage';
 import type { MessageAnalysis, IntentLabel } from './types/messageAnalysis';
 import { loadIstContextFromJson } from './istContextFromJson';
+import { loadIstContextFromDataConnect } from './istContextFromDataConnect';
 import { saveIstEventToDataConnect } from './dataconnect/istEventsClient';
 
 /**
@@ -139,22 +140,50 @@ async function runIstAnalysis(
 ): Promise<MessageAnalysis> {
   const isEmulator = process.env.FUNCTIONS_EMULATOR === 'true';
   
-  // Load IST context from JSON file when running in emulator
+  // Load IST context when running in emulator
   let chatHistory: Array<{ role: 'student' | 'tutor' | 'system'; content: string; created_at: string | null }> = [];
   let istHistory: Array<{ intent: string; skills: string[]; trajectory: string[]; created_at: string | null }> = [];
   
   if (isEmulator) {
     try {
-      const context = await loadIstContextFromJson({
+      console.log('[analyzeMessage] Attempting to load IST context from Data Connect');
+      const context = await loadIstContextFromDataConnect({
         userId: input.uid, // Use the uid (demo-user in emulator)
         courseId: input.courseId ?? undefined,
         maxHistory: 5,
       });
       chatHistory = context.chatHistory;
       istHistory = context.istHistory;
+      console.log(
+        '[analyzeMessage] Loaded IST context from Data Connect, events:',
+        istHistory.length
+      );
     } catch (err) {
-      // Log but don't fail - context loading is optional
-      console.warn('[analyzeMessage] Failed to load IST context from JSON:', err);
+      console.warn(
+        '[analyzeMessage] Failed to load IST context from Data Connect, falling back to JSON:',
+        err
+      );
+    }
+
+    // If Data Connect returned no history, optionally fall back to JSON (for early runs)
+    if (istHistory.length === 0) {
+      try {
+        console.log('[analyzeMessage] Falling back to JSON IST context loader');
+        const context = await loadIstContextFromJson({
+          userId: input.uid, // Use the uid (demo-user in emulator)
+          courseId: input.courseId ?? undefined,
+          maxHistory: 5,
+        });
+        chatHistory = context.chatHistory;
+        istHistory = context.istHistory;
+        console.log(
+          '[analyzeMessage] Loaded IST context from JSON, events:',
+          istHistory.length
+        );
+      } catch (err) {
+        // Log but don't fail - context loading is optional
+        console.warn('[analyzeMessage] Failed to load IST context from JSON:', err);
+      }
     }
   }
 
@@ -191,6 +220,10 @@ async function runIstAnalysis(
 }
 
 export const analyzeMessage = onCall(
+  {
+    region: 'us-central1',
+    timeoutSeconds: 180,
+  },
   async (
     request: CallableRequest<AnalyzeMessageRequest>
   ): Promise<MessageAnalysis> => {
