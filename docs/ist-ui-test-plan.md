@@ -163,6 +163,31 @@ GET /student/courses/cs202 200 in Xms
 ```
 
 **Keep this terminal open** – the Next.js server must remain running for the UI to work.
+### Terminal 3 – Firebase Emulator (Hosting & Functions)
+
+Start the Firebase Emulator Suite in a **third** terminal to provide local Hosting and Functions endpoints used by the app.
+
+- From the project root (replace path as needed):
+
+```powershell
+cd path/to/CourseLLM-Firebase--miluimnikim
+firebase emulators:start --only hosting,functions
+```
+
+- Or with `npx` if you don't have `firebase-tools` globally:
+
+```powershell
+npx firebase emulators:start --only hosting,functions
+```
+
+This will start the local Emulator UI (typically `http://localhost:4000`) and expose the Hosting and Functions emulators so the Next.js client and callable functions work as expected.
+
+Mandatory checks before starting:
+- Ensure `NEXT_PUBLIC_FIREBASE_USE_EMULATOR=true` is set in your `\.env.local` (client-side) so the app connects to local emulators. See `\.env.local` for example values.
+- Verify `FIRESTORE_EMULATOR_HOST`, `FIRESTORE_EMULATOR_PORT`, `FIREBASE_FUNCTIONS_EMULATOR_HOST`, and `FIREBASE_FUNCTIONS_EMULATOR_PORT` are set in `\.env.local` when the emulator is required.
+- Confirm `firebase.json` and `.firebaserc` are configured for the services you intend to emulate.
+- Keep Terminal 3 open while running the UI tests so emulator endpoints remain available.
+
 
 ---
 
