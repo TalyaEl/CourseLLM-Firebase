@@ -6,6 +6,7 @@
 
 # Dependencies and lock files
 /node_modules
+functions/node_modules/
 /.pnp
 .pnp.*
 .yarn/*
@@ -88,6 +89,7 @@ firebase-debug.log
 firestore-debug.log
 firebase-debug.*.log
 
+<<<<<<< HEAD
 # TypeScript
 next-env.d.ts
 
@@ -98,16 +100,26 @@ next-env.d.ts
 dataconnect/.dataconnect
 src/dataconnect-generated/
 src/dataconnect-admin-generated/
+=======
+dataconnect-debug.log
+pglite-debug.log
+>>>>>>> osher-pipeline-and-db-logic-completed
 
 # ============================================================================
 # 5. Local Development Data & Misc
 # ============================================================================
 
 # JSON storage for demo mode (contains generated IST events)
+# Note: The actual events.json file is ignored, but events.json.example is committed
 src/mocks/ist/events.json
 
+<<<<<<< HEAD
 # Misc files
 *.pem
+=======
+# Allow the example file to be committed
+!src/mocks/ist/events.json.example
+>>>>>>> osher-pipeline-and-db-logic-completed
 
 # ============================================================================
 # 6. Operating System Files (Deduplicated)

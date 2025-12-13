@@ -1,4 +1,5 @@
 /**
+<<<<<<< HEAD
  * Import function triggers from their respective submodules:
  *
  * import {onCall} from "firebase-functions/v2/https";
@@ -30,3 +31,12 @@ setGlobalOptions({ maxInstances: 10 });
 //   logger.info("Hello logs!", {structuredData: true});
 //   response.send("Hello from Firebase!");
 // });
+=======
+ * Firebase Cloud Functions entry point.
+ * 
+ * This file exports all callable Cloud Functions for the Firebase Emulator and production.
+ */
+
+export { analyzeMessage } from './analyzeMessage';
+
+>>>>>>> osher-pipeline-and-db-logic-completed

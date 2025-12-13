@@ -1,5 +1,9 @@
 {
   "projects": {
+<<<<<<< HEAD
     "default": "studio-5809901912-20ea0"
+=======
+    "default": "coursewise-f2421"
+>>>>>>> osher-pipeline-and-db-logic-completed
   }
 }

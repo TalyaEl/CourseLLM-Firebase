@@ -1,0 +1,397 @@
+"""
+✨ `IstEvent_KeyOutput` returns the primary key fields of table type `IstEvent`.
+
+It has the same format as `IstEvent_Key`, but is only used as mutation return value.
+"""
+scalar IstEvent_KeyOutput
+"""
+✨ Generated data input type for table 'IstEvent'. It includes all necessary fields for creating or upserting rows into table.
+"""
+input IstEvent_Data {
+  """
+  ✨ Generated from Field `IstEvent`.`id` of type `UUID!`
+  """
+  id: UUID
+  """
+  ✨ `_expr` server value variant of `id` (✨ Generated from Field `IstEvent`.`id` of type `UUID!`)
+  """
+  id_expr: UUID_Expr
+  """
+  ✨ Generated from Field `IstEvent`.`courseId` of type `String!`
+  """
+  courseId: String
+  """
+  ✨ `_expr` server value variant of `courseId` (✨ Generated from Field `IstEvent`.`courseId` of type `String!`)
+  """
+  courseId_expr: String_Expr
+  """
+  ✨ Generated from Field `IstEvent`.`createdAt` of type `Timestamp!`
+  """
+  createdAt: Timestamp
+  """
+  ✨ `_expr` server value variant of `createdAt` (✨ Generated from Field `IstEvent`.`createdAt` of type `Timestamp!`)
+  """
+  createdAt_expr: Timestamp_Expr
+  """
+  ✨ `_time` server value variant of `createdAt` (✨ Generated from Field `IstEvent`.`createdAt` of type `Timestamp!`)
+  """
+  createdAt_time: Timestamp_Relative
+  """
+  ✨ `_update` server value variant of `createdAt` (✨ Generated from Field `IstEvent`.`createdAt` of type `Timestamp!`)
+  """
+  createdAt_update: [Timestamp_Update!]
+  """
+  ✨ Generated from Field `IstEvent`.`intent` of type `String!`
+  """
+  intent: String
+  """
+  ✨ `_expr` server value variant of `intent` (✨ Generated from Field `IstEvent`.`intent` of type `String!`)
+  """
+  intent_expr: String_Expr
+  """
+  ✨ Generated from Field `IstEvent`.`messageId` of type `String!`
+  """
+  messageId: String
+  """
+  ✨ `_expr` server value variant of `messageId` (✨ Generated from Field `IstEvent`.`messageId` of type `String!`)
+  """
+  messageId_expr: String_Expr
+  """
+  ✨ Generated from Field `IstEvent`.`skills` of type `Any`
+  """
+  skills: Any
+  """
+  ✨ `_expr` server value variant of `skills` (✨ Generated from Field `IstEvent`.`skills` of type `Any`)
+  """
+  skills_expr: Any_Expr
+  """
+  ✨ Generated from Field `IstEvent`.`threadId` of type `String!`
+  """
+  threadId: String
+  """
+  ✨ `_expr` server value variant of `threadId` (✨ Generated from Field `IstEvent`.`threadId` of type `String!`)
+  """
+  threadId_expr: String_Expr
+  """
+  ✨ Generated from Field `IstEvent`.`trajectory` of type `Any`
+  """
+  trajectory: Any
+  """
+  ✨ `_expr` server value variant of `trajectory` (✨ Generated from Field `IstEvent`.`trajectory` of type `Any`)
+  """
+  trajectory_expr: Any_Expr
+  """
+  ✨ Generated from Field `IstEvent`.`userId` of type `String!`
+  """
+  userId: String
+  """
+  ✨ `_expr` server value variant of `userId` (✨ Generated from Field `IstEvent`.`userId` of type `String!`)
+  """
+  userId_expr: String_Expr
+  """
+  ✨ Generated from Field `IstEvent`.`utterance` of type `String!`
+  """
+  utterance: String
+  """
+  ✨ `_expr` server value variant of `utterance` (✨ Generated from Field `IstEvent`.`utterance` of type `String!`)
+  """
+  utterance_expr: String_Expr
+}
+"""
+✨ Generated filter input type for table 'IstEvent'. This input allows filtering objects using various conditions. Use `_or`, `_and`, and `_not` to compose complex filters.
+"""
+input IstEvent_Filter {
+  """
+  Apply multiple filter conditions using `AND` logic.
+  """
+  _and: [IstEvent_Filter!]
+  """
+  Negate the result of the provided filter condition.
+  """
+  _not: IstEvent_Filter
+  """
+  Apply multiple filter conditions using `OR` logic.
+  """
+  _or: [IstEvent_Filter!]
+  """
+  ✨ Generated from Field `IstEvent`.`id` of type `UUID!`
+  """
+  id: UUID_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`courseId` of type `String!`
+  """
+  courseId: String_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`createdAt` of type `Timestamp!`
+  """
+  createdAt: Timestamp_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`intent` of type `String!`
+  """
+  intent: String_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`messageId` of type `String!`
+  """
+  messageId: String_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`skills` of type `Any`
+  """
+  skills: Any_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`threadId` of type `String!`
+  """
+  threadId: String_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`trajectory` of type `Any`
+  """
+  trajectory: Any_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`userId` of type `String!`
+  """
+  userId: String_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`utterance` of type `String!`
+  """
+  utterance: String_Filter
+}
+"""
+✨ Generated first-row input type for table 'IstEvent'. This input selects the first row matching the filter criteria, ordered according to the specified conditions.
+"""
+input IstEvent_FirstRow {
+  """
+  Order the result by the specified fields.
+  """
+  orderBy: [IstEvent_Order!]
+  """
+  Filters rows based on the specified conditions.
+  """
+  where: IstEvent_Filter
+}
+"""
+✨ Generated having input type for table 'IstEvent'. This input allows you to filter groups during aggregate queries using various conditions. Use `_or`, `_and`, and `_not` to compose complex filters.
+"""
+input IstEvent_Having {
+  """
+  Apply multiple Having conditions using `AND` logic.
+  """
+  _and: [IstEvent_Having!]
+  """
+  Whether to apply DISTINCT to the aggregate function.
+  """
+  _distinct: Boolean
+  """
+  Negate the result of the provided Having condition.
+  """
+  _not: IstEvent_Having
+  """
+  Apply multiple Having conditions using `OR` logic.
+  """
+  _or: [IstEvent_Having!]
+  """
+  ✨ Generated from Field `IstEvent`.`_count` of type `Int!`
+  """
+  _count: Int_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`courseId_count` of type `Int!`
+  """
+  courseId_count: Int_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`createdAt_count` of type `Int!`
+  """
+  createdAt_count: Int_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`id_count` of type `Int!`
+  """
+  id_count: Int_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`intent_count` of type `Int!`
+  """
+  intent_count: Int_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`messageId_count` of type `Int!`
+  """
+  messageId_count: Int_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`skills_count` of type `Int!`
+  """
+  skills_count: Int_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`threadId_count` of type `Int!`
+  """
+  threadId_count: Int_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`trajectory_count` of type `Int!`
+  """
+  trajectory_count: Int_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`userId_count` of type `Int!`
+  """
+  userId_count: Int_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`utterance_count` of type `Int!`
+  """
+  utterance_count: Int_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`createdAt_min` of type `Timestamp`
+  """
+  createdAt_min: Timestamp_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`skills_min` of type `Any`
+  """
+  skills_min: Any_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`trajectory_min` of type `Any`
+  """
+  trajectory_min: Any_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`createdAt_max` of type `Timestamp`
+  """
+  createdAt_max: Timestamp_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`skills_max` of type `Any`
+  """
+  skills_max: Any_Filter
+  """
+  ✨ Generated from Field `IstEvent`.`trajectory_max` of type `Any`
+  """
+  trajectory_max: Any_Filter
+}
+"""
+✨ Generated key input type for table 'IstEvent'. It represents the primary key fields used to uniquely identify a row in the table.
+"""
+input IstEvent_Key {
+  """
+  ✨ Generated from Field `IstEvent`.`id` of type `UUID!`
+  """
+  id: UUID
+  """
+  ✨ `_expr` server value variant of `id` (✨ Generated from Field `IstEvent`.`id` of type `UUID!`)
+  """
+  id_expr: UUID_Expr
+}
+"""
+✨ Generated list filter input type for table 'IstEvent'. This input applies filtering logic based on the count or existence of related objects that matches certain criteria.
+"""
+input IstEvent_ListFilter {
+  """
+  The desired number of objects that match the condition (defaults to at least one).
+  """
+  count: Int_Filter = {gt:0}
+  """
+  Condition of the related objects to filter for.
+  """
+  exist: IstEvent_Filter
+}
+"""
+✨ Generated order input type for table 'IstEvent'. This input defines the sorting order of rows in query results based on one or more fields.
+"""
+input IstEvent_Order {
+  """
+  ✨ Generated from Field `IstEvent`.`id` of type `UUID!`
+  """
+  id: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`courseId` of type `String!`
+  """
+  courseId: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`createdAt` of type `Timestamp!`
+  """
+  createdAt: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`intent` of type `String!`
+  """
+  intent: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`messageId` of type `String!`
+  """
+  messageId: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`skills` of type `Any`
+  """
+  skills: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`threadId` of type `String!`
+  """
+  threadId: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`trajectory` of type `Any`
+  """
+  trajectory: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`userId` of type `String!`
+  """
+  userId: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`utterance` of type `String!`
+  """
+  utterance: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`_count` of type `Int!`
+  """
+  _count: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`courseId_count` of type `Int!`
+  """
+  courseId_count: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`createdAt_count` of type `Int!`
+  """
+  createdAt_count: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`id_count` of type `Int!`
+  """
+  id_count: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`intent_count` of type `Int!`
+  """
+  intent_count: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`messageId_count` of type `Int!`
+  """
+  messageId_count: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`skills_count` of type `Int!`
+  """
+  skills_count: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`threadId_count` of type `Int!`
+  """
+  threadId_count: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`trajectory_count` of type `Int!`
+  """
+  trajectory_count: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`userId_count` of type `Int!`
+  """
+  userId_count: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`utterance_count` of type `Int!`
+  """
+  utterance_count: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`createdAt_min` of type `Timestamp`
+  """
+  createdAt_min: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`skills_min` of type `Any`
+  """
+  skills_min: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`trajectory_min` of type `Any`
+  """
+  trajectory_min: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`createdAt_max` of type `Timestamp`
+  """
+  createdAt_max: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`skills_max` of type `Any`
+  """
+  skills_max: OrderDirection
+  """
+  ✨ Generated from Field `IstEvent`.`trajectory_max` of type `Any`
+  """
+  trajectory_max: OrderDirection
+}

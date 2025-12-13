@@ -1,0 +1,55 @@
+extend type Query {
+  """
+  ✨ Look up a single `IstEvent` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  istEvent(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: IstEvent_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: IstEvent_FirstRow
+  ): IstEvent @fdc_generated(from: "IstEvent", purpose: QUERY_SINGLE)
+  """
+  ✨ List `IstEvent` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  istEvents(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: IstEvent_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [IstEvent_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: IstEvent_Having
+  ): [IstEvent!]! @fdc_generated(from: "IstEvent", purpose: QUERY_MULTIPLE)
+}

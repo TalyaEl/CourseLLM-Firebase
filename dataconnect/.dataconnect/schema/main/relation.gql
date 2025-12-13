@@ -1,0 +1,128 @@
+extend type IstEvent {
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "IstEvent", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `IstEvent` table.
+  """
+  _count: Int! @fdc_generated(from: "IstEvent.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `IstEvent` table where the `courseId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  courseId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "IstEvent.courseId", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `IstEvent` table where the `createdAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  createdAt_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "IstEvent.createdAt", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `IstEvent` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "IstEvent.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `IstEvent` table where the `intent` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  intent_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "IstEvent.intent", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `IstEvent` table where the `messageId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  messageId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "IstEvent.messageId", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `IstEvent` table where the `skills` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  skills_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "IstEvent.skills", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `IstEvent` table where the `threadId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  threadId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "IstEvent.threadId", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `IstEvent` table where the `trajectory` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  trajectory_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "IstEvent.trajectory", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `IstEvent` table where the `userId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  userId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "IstEvent.userId", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `IstEvent` table where the `utterance` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  utterance_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "IstEvent.utterance", purpose: QUERY_COUNT)
+  """
+  ✨ Minimum of the `createdAt` field in the `IstEvent` table.
+  """
+  createdAt_min: Timestamp @fdc_generated(from: "IstEvent.createdAt", purpose: QUERY_MIN)
+  """
+  ✨ Minimum of the `skills` field in the `IstEvent` table.
+  """
+  skills_min: Any @fdc_generated(from: "IstEvent.skills", purpose: QUERY_MIN)
+  """
+  ✨ Minimum of the `trajectory` field in the `IstEvent` table.
+  """
+  trajectory_min: Any @fdc_generated(from: "IstEvent.trajectory", purpose: QUERY_MIN)
+  """
+  ✨ Maximum of the `createdAt` field in the `IstEvent` table.
+  """
+  createdAt_max: Timestamp @fdc_generated(from: "IstEvent.createdAt", purpose: QUERY_MAX)
+  """
+  ✨ Maximum of the `skills` field in the `IstEvent` table.
+  """
+  skills_max: Any @fdc_generated(from: "IstEvent.skills", purpose: QUERY_MAX)
+  """
+  ✨ Maximum of the `trajectory` field in the `IstEvent` table.
+  """
+  trajectory_max: Any @fdc_generated(from: "IstEvent.trajectory", purpose: QUERY_MAX)
+  """
+  A generated field that is used for caching results in SDKs.
+  """
+  _id: ID! @fdc_generated(from: "IstEvent.id", purpose: GLOBAL_ID)
+}

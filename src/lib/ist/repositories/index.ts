@@ -1,13 +1,11 @@
 /**
  * Repository factory for IST events and chat history.
  * 
- * Selects the appropriate repository implementation based on environment variables.
  * Currently supports JSON-based storage for IST events and in-memory stub for chat history.
  */
 
 import type { IstEventRepository } from './istEventRepository';
 import { JsonIstEventRepository } from './jsonIstEventRepository';
-import { PostgresIstEventRepository } from './postgresIstEventRepository';
 import type { ChatHistoryRepository } from './chatHistoryRepository';
 import { InMemoryChatHistoryRepository } from './inMemoryChatHistoryRepository';
 
@@ -16,9 +14,7 @@ let singletonRepository: IstEventRepository | null = null;
 /**
  * Get the IST event repository instance.
  * 
- * Uses IST_STORAGE_MODE environment variable:
- * - 'json' (default): JSON-based file storage
- * - 'postgres': PostgreSQL/Supabase storage (not yet implemented)
+ * Currently returns a JSON-based file storage implementation.
  * 
  * @returns The repository instance
  */
@@ -27,26 +23,7 @@ export function getIstEventRepository(): IstEventRepository {
     return singletonRepository;
   }
 
-  const mode = process.env.IST_STORAGE_MODE || 'json';
-
-  switch (mode) {
-    case 'json':
-      singletonRepository = new JsonIstEventRepository();
-      console.log('[IST][Repository] Using JSON-based storage');
-      break;
-
-    case 'postgres':
-      // Future: when PostgresIstEventRepository is implemented
-      singletonRepository = new PostgresIstEventRepository();
-      console.log('[IST][Repository] Using PostgreSQL storage (not yet implemented)');
-      break;
-
-    default:
-      throw new Error(
-        `Unknown IST_STORAGE_MODE: ${mode}. Use 'json' or 'postgres'.`
-      );
-  }
-
+  singletonRepository = new JsonIstEventRepository();
   return singletonRepository;
 }
 

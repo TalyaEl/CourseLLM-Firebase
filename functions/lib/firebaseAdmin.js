@@ -7,4 +7,8 @@ Object.defineProperty(exports, "getFirestore", { enumerable: true, get: function
 if (!(0, app_1.getApps)().length) {
     (0, app_1.initializeApp)();
 }
+// Log when running against the Firestore Emulator
+if (process.env.FIRESTORE_EMULATOR_HOST) {
+    console.log('[Firebase Admin] Connecting to Firestore emulator at', process.env.FIRESTORE_EMULATOR_HOST);
+}
 //# sourceMappingURL=firebaseAdmin.js.map

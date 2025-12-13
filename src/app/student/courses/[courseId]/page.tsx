@@ -50,7 +50,7 @@ export default function CourseDetailPage({ params }: { params: { courseId: strin
                 </CardContent>
             </Card>
             <div className="h-full">
-                <ChatPanel courseMaterial={courseMaterialString} />
+                <ChatPanel courseMaterial={courseMaterialString} courseId={courseId} />
             </div>
         </div>
     </div>

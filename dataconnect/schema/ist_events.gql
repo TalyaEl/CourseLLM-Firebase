@@ -1,0 +1,21 @@
+# Stores a single IST analysis event for a chat message
+type IstEvent @table {
+  # Primary key (UUID)
+  id: UUID! @default(expr: "uuidV4()")
+
+  # Who and where
+  userId: String!
+  courseId: String!
+  threadId: String!
+  messageId: String!
+
+  # Content and analysis
+  utterance: String!     # student's question / message
+  intent: String!        # free-form intent text (for now)
+  skills: Any @col(dataType: "jsonb")           # JSON structure with skills list
+  trajectory: Any @col(dataType: "jsonb")       # JSON structure with suggested steps
+
+  # When it was created
+  createdAt: Timestamp! @default(expr: "request.time")
+}
+
