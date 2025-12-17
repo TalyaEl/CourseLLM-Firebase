@@ -275,5 +275,8 @@ async def startup_event():
 
 if __name__ == "__main__":
     import uvicorn
+    import sys
     # Run on port 8000 by default
-    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+    # disable reload on Windows for better compatibility
+    reload = False if sys.platform == "win32" else True
+    uvicorn.run(app, host="0.0.0.0", port=8000, reload=reload)
