@@ -34,13 +34,8 @@ function getOrInitDataConnect() {
         }
         const dc = (0, data_connect_1.getDataConnect)(functions_generated_1.connectorConfig);
         if (process.env.FUNCTIONS_EMULATOR === 'true') {
-<<<<<<< HEAD
-            // Port 9399 is defined in firebase.json for the Data Connect emulator
-            (0, data_connect_1.connectDataConnectEmulator)(dc, '127.0.0.1', 9399);
-=======
             // Port 9400 is defined in firebase.json for the Data Connect emulator
             (0, data_connect_1.connectDataConnectEmulator)(dc, 'localhost', 9400);
->>>>>>> origin/tests1
         }
         dataConnectInstance = dc;
         console.log('[DataConnect] Initialized Data Connect client for IST context loading');
