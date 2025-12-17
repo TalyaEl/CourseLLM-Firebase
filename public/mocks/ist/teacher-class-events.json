@@ -1,0 +1,600 @@
+[
+  {
+    "id": "cs-demo-101-0001",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-01T09:00:00.000Z",
+    "skills": ["Arrays", "Big O notation"]
+  },
+  {
+    "id": "cs-demo-101-0002",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-01T09:05:00.000Z",
+    "skills": ["arrays", "time complexity"]
+  },
+  {
+    "id": "cs-demo-101-0003",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-01T09:10:00.000Z",
+    "skills": ["Linked lists", "Pointers"]
+  },
+  {
+    "id": "cs-demo-101-0004",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-01T09:15:00.000Z",
+    "skills": ["linked  lists ", "memory management "]
+  },
+  {
+    "id": "cs-demo-101-0005",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-01T09:20:00.000Z",
+    "skills": ["Recursion", "Tree traversal"]
+  },
+  {
+    "id": "cs-demo-101-0006",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-01T09:25:00.000Z",
+    "skills": ["recursion ", " call stack"]
+  },
+  {
+    "id": "cs-demo-101-0007",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-01T09:30:00.000Z",
+    "skills": ["Binary trees", "Tree traversal"]
+  },
+  {
+    "id": "cs-demo-101-0008",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-01T09:35:00.000Z",
+    "skills": ["binary  trees", "height-balanced trees"]
+  },
+  {
+    "id": "cs-demo-101-0009",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-01T09:40:00.000Z",
+    "skills": ["Hash tables", "Hash functions"]
+  },
+  {
+    "id": "cs-demo-101-0010",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-01T09:45:00.000Z",
+    "skills": ["hash   tables", "collision resolution"]
+  },
+  {
+    "id": "cs-demo-101-0011",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-01T09:50:00.000Z",
+    "skills": ["Graphs", "BFS", "DFS"]
+  },
+  {
+    "id": "cs-demo-101-0012",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-01T09:55:00.000Z",
+    "skills": ["graphs ", " shortest path "]
+  },
+  {
+    "id": "cs-demo-101-0013",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-01T10:00:00.000Z",
+    "skills": ["Sorting algorithms", "Quick sort"]
+  },
+  {
+    "id": "cs-demo-101-0014",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-01T10:05:00.000Z",
+    "skills": ["sorting  algorithms", " merge sort"]
+  },
+  {
+    "id": "cs-demo-101-0015",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-01T10:10:00.000Z",
+    "skills": ["Searching algorithms", "Binary search"]
+  },
+  {
+    "id": "cs-demo-101-0016",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-01T10:15:00.000Z",
+    "skills": ["binary  search", "searching algorithms"]
+  },
+  {
+    "id": "cs-demo-101-0017",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-01T10:20:00.000Z",
+    "skills": ["Stacks", "Queues"]
+  },
+  {
+    "id": "cs-demo-101-0018",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-01T10:25:00.000Z",
+    "skills": [" stacks", " queues "]
+  },
+  {
+    "id": "cs-demo-101-0019",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-01T10:30:00.000Z",
+    "skills": ["Dynamic programming", "Overlapping subproblems"]
+  },
+  {
+    "id": "cs-demo-101-0020",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-01T10:35:00.000Z",
+    "skills": [" dynamic   programming", "optimal substructure"]
+  },
+  {
+    "id": "cs-demo-101-0021",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-02T09:00:00.000Z",
+    "skills": ["Greedy algorithms", "Exchange argument"]
+  },
+  {
+    "id": "cs-demo-101-0022",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-02T09:05:00.000Z",
+    "skills": ["greedy algorithms ", "activity selection"]
+  },
+  {
+    "id": "cs-demo-101-0023",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-02T09:10:00.000Z",
+    "skills": ["Divide and conquer", "Master theorem"]
+  },
+  {
+    "id": "cs-demo-101-0024",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-02T09:15:00.000Z",
+    "skills": ["divide   and conquer", "recurrence relations"]
+  },
+  {
+    "id": "cs-demo-101-0025",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-02T09:20:00.000Z",
+    "skills": ["Backtracking", "Constraint satisfaction"]
+  },
+  {
+    "id": "cs-demo-101-0026",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-02T09:25:00.000Z",
+    "skills": [" backtracking", "search trees"]
+  },
+  {
+    "id": "cs-demo-101-0027",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-02T09:30:00.000Z",
+    "skills": ["Dynamic arrays", "Amortized analysis"]
+  },
+  {
+    "id": "cs-demo-101-0028",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-02T09:35:00.000Z",
+    "skills": ["dynamic  arrays ", "resizing strategies"]
+  },
+  {
+    "id": "cs-demo-101-0029",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-02T09:40:00.000Z",
+    "skills": ["Concurrency", "Race conditions"]
+  },
+  {
+    "id": "cs-demo-101-0030",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-02T09:45:00.000Z",
+    "skills": [" concurrency", "locks and semaphores"]
+  },
+  {
+    "id": "cs-demo-101-0031",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-03T09:00:00.000Z",
+    "skills": ["Distributed systems", "Consistency models"]
+  },
+  {
+    "id": "cs-demo-101-0032",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-03T09:05:00.000Z",
+    "skills": [" distributed  systems", "replication"]
+  },
+  {
+    "id": "cs-demo-101-0033",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-03T09:10:00.000Z",
+    "skills": ["Databases", "SQL joins"]
+  },
+  {
+    "id": "cs-demo-101-0034",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-03T09:15:00.000Z",
+    "skills": [" databases ", "normalization"]
+  },
+  {
+    "id": "cs-demo-101-0035",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-03T09:20:00.000Z",
+    "skills": ["Transactions", "ACID"]
+  },
+  {
+    "id": "cs-demo-101-0036",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-03T09:25:00.000Z",
+    "skills": ["transactions ", "isolation levels"]
+  },
+  {
+    "id": "cs-demo-101-0037",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-03T09:30:00.000Z",
+    "skills": ["Indexing", "B-trees"]
+  },
+  {
+    "id": "cs-demo-101-0038",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-03T09:35:00.000Z",
+    "skills": ["indexing ", " query performance"]
+  },
+  {
+    "id": "cs-demo-101-0039",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-03T09:40:00.000Z",
+    "skills": ["Caching", "Cache invalidation"]
+  },
+  {
+    "id": "cs-demo-101-0040",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-03T09:45:00.000Z",
+    "skills": [" caching", "cache eviction policies"]
+  },
+  {
+    "id": "cs-demo-101-0041",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-04T09:00:00.000Z",
+    "skills": ["API design", "REST"]
+  },
+  {
+    "id": "cs-demo-101-0042",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-04T09:05:00.000Z",
+    "skills": [" api design ", "error handling"]
+  },
+  {
+    "id": "cs-demo-101-0043",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-04T09:10:00.000Z",
+    "skills": ["Testing", "Unit tests"]
+  },
+  {
+    "id": "cs-demo-101-0044",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-04T09:15:00.000Z",
+    "skills": [" testing ", "integration tests"]
+  },
+  {
+    "id": "cs-demo-101-0045",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-04T09:20:00.000Z",
+    "skills": ["Debugging", "Logging"]
+  },
+  {
+    "id": "cs-demo-101-0046",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-04T09:25:00.000Z",
+    "skills": [" debugging", "stack traces"]
+  },
+  {
+    "id": "cs-demo-101-0047",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-04T09:30:00.000Z",
+    "skills": ["Code review", "Refactoring"]
+  },
+  {
+    "id": "cs-demo-101-0048",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-04T09:35:00.000Z",
+    "skills": [" code  review", "readability"]
+  },
+  {
+    "id": "cs-demo-101-0049",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-04T09:40:00.000Z",
+    "skills": ["Version control", "Git workflows"]
+  },
+  {
+    "id": "cs-demo-101-0050",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-04T09:45:00.000Z",
+    "skills": [" version   control", "branching strategies"]
+  },
+  {
+    "id": "cs-demo-101-0051",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-05T09:00:00.000Z",
+    "skills": ["Arrays", "Sorting algorithms"]
+  },
+  {
+    "id": "cs-demo-101-0052",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-05T09:05:00.000Z",
+    "skills": ["arrays", "binary search"]
+  },
+  {
+    "id": "cs-demo-101-0053",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-05T09:10:00.000Z",
+    "skills": ["Linked lists", "Time complexity"]
+  },
+  {
+    "id": "cs-demo-101-0054",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-05T09:15:00.000Z",
+    "skills": [" linked   lists", "pointers"]
+  },
+  {
+    "id": "cs-demo-101-0055",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-05T09:20:00.000Z",
+    "skills": ["Recursion", "Dynamic programming"]
+  },
+  {
+    "id": "cs-demo-101-0056",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-05T09:25:00.000Z",
+    "skills": [" recursion", " divide and conquer"]
+  },
+  {
+    "id": "cs-demo-101-0057",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-05T09:30:00.000Z",
+    "skills": ["Binary trees", "Tree traversal"]
+  },
+  {
+    "id": "cs-demo-101-0058",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-05T09:35:00.000Z",
+    "skills": [" binary trees ", "recursion"]
+  },
+  {
+    "id": "cs-demo-101-0059",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-05T09:40:00.000Z",
+    "skills": ["Hash tables", "Big O notation"]
+  },
+  {
+    "id": "cs-demo-101-0060",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-05T09:45:00.000Z",
+    "skills": ["hash tables", "space complexity"]
+  },
+  {
+    "id": "cs-demo-101-0061",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-06T09:00:00.000Z",
+    "skills": []
+  },
+  {
+    "id": "cs-demo-101-0062",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-06T09:05:00.000Z"
+  },
+  {
+    "id": "cs-demo-101-0063",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-06T09:10:00.000Z",
+    "skills": ["   recursion\t", " \n dynamic  programming "]
+  },
+  {
+    "id": "cs-demo-101-0064",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-06T09:15:00.000Z",
+    "skills": ["graphs", "   bfs  ", " dfs\r\n"]
+  },
+  {
+    "id": "cs-demo-101-0065",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-06T09:20:00.000Z",
+    "skills": ["\tarrays  ", "  linked  lists "]
+  },
+  {
+    "id": "cs-demo-101-0066",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-06T09:25:00.000Z",
+    "skills": ["sorting algorithms", "  quick   sort  "]
+  },
+  {
+    "id": "cs-demo-101-0067",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-06T09:30:00.000Z",
+    "skills": ["!\t ", "  "]
+  },
+  {
+    "id": "cs-demo-101-0068",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-06T09:35:00.000Z",
+    "skills": []
+  },
+  {
+    "id": "cs-demo-101-0069",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-06T09:40:00.000Z"
+  },
+  {
+    "id": "cs-demo-101-0070",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-06T09:45:00.000Z",
+    "skills": ["Dynamic arrays", "amortized   analysis "]
+  },
+  {
+    "id": "cs-demo-101-0071",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-07T09:00:00.000Z",
+    "skills": ["Arrays", "Big O notation"]
+  },
+  {
+    "id": "cs-demo-101-0072",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-07T09:05:00.000Z",
+    "skills": ["arrays", "time complexity"]
+  },
+  {
+    "id": "cs-demo-101-0073",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-07T09:10:00.000Z",
+    "skills": ["Linked lists", "Pointers"]
+  },
+  {
+    "id": "cs-demo-101-0074",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-07T09:15:00.000Z",
+    "skills": ["linked  lists ", "memory management "]
+  },
+  {
+    "id": "cs-demo-101-0075",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-07T09:20:00.000Z",
+    "skills": ["Recursion", "Tree traversal"]
+  },
+  {
+    "id": "cs-demo-101-0076",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-07T09:25:00.000Z",
+    "skills": ["recursion ", " call stack"]
+  },
+  {
+    "id": "cs-demo-101-0077",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-07T09:30:00.000Z",
+    "skills": ["Binary trees", "Tree traversal"]
+  },
+  {
+    "id": "cs-demo-101-0078",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-07T09:35:00.000Z",
+    "skills": ["binary  trees", "height-balanced trees"]
+  },
+  {
+    "id": "cs-demo-101-0079",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-07T09:40:00.000Z",
+    "skills": ["Hash tables", "Hash functions"]
+  },
+  {
+    "id": "cs-demo-101-0080",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-07T09:45:00.000Z",
+    "skills": ["hash   tables", "collision resolution"]
+  },
+  {
+    "id": "cs-demo-101-0081",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-08T09:00:00.000Z",
+    "skills": ["Arrays", "Sorting algorithms"]
+  },
+  {
+    "id": "cs-demo-101-0082",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-08T09:05:00.000Z",
+    "skills": ["arrays", "binary search"]
+  },
+  {
+    "id": "cs-demo-101-0083",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-08T09:10:00.000Z",
+    "skills": ["Linked lists", "Time complexity"]
+  },
+  {
+    "id": "cs-demo-101-0084",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-08T09:15:00.000Z",
+    "skills": [" linked   lists", "pointers"]
+  },
+  {
+    "id": "cs-demo-101-0085",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-08T09:20:00.000Z",
+    "skills": ["Recursion", "Dynamic programming"]
+  },
+  {
+    "id": "cs-demo-101-0086",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-08T09:25:00.000Z",
+    "skills": [" recursion", " divide and conquer"]
+  },
+  {
+    "id": "cs-demo-101-0087",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-08T09:30:00.000Z",
+    "skills": ["Binary trees", "Tree traversal"]
+  },
+  {
+    "id": "cs-demo-101-0088",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-08T09:35:00.000Z",
+    "skills": [" binary trees ", "recursion"]
+  },
+  {
+    "id": "cs-demo-101-0089",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-08T09:40:00.000Z",
+    "skills": ["Hash tables", "Big O notation"]
+  },
+  {
+    "id": "cs-demo-101-0090",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-08T09:45:00.000Z",
+    "skills": ["hash tables", "space complexity"]
+  },
+  {
+    "id": "cs-demo-101-0091",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-09T09:00:00.000Z",
+    "skills": []
+  },
+  {
+    "id": "cs-demo-101-0092",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-09T09:05:00.000Z"
+  },
+  {
+    "id": "cs-demo-101-0093",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-09T09:10:00.000Z",
+    "skills": ["   recursion\t", " \n dynamic  programming "]
+  },
+  {
+    "id": "cs-demo-101-0094",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-09T09:15:00.000Z",
+    "skills": ["graphs", "   bfs  ", " dfs\r\n"]
+  },
+  {
+    "id": "cs-demo-101-0095",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-09T09:20:00.000Z",
+    "skills": ["\tarrays  ", "  linked  lists "]
+  },
+  {
+    "id": "cs-demo-101-0096",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-09T09:25:00.000Z",
+    "skills": ["sorting algorithms", "  quick   sort  "]
+  },
+  {
+    "id": "cs-demo-101-0097",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-09T09:30:00.000Z",
+    "skills": ["!\t ", "  "]
+  },
+  {
+    "id": "cs-demo-101-0098",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-09T09:35:00.000Z",
+    "skills": []
+  },
+  {
+    "id": "cs-demo-101-0099",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-09T09:40:00.000Z"
+  },
+  {
+    "id": "cs-demo-101-0100",
+    "courseId": "cs-demo-101",
+    "createdAt": "2025-10-09T09:45:00.000Z",
+    "skills": ["Dynamic arrays", "amortized   analysis "]
+  }
+]
+
+

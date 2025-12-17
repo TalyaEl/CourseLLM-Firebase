@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { courses } from '@/lib/mock-data';
-import { getPlaceholderImage } from '@/lib/placeholder-images';
+import Link from "next/link";
+import Image from "next/image";
+import { courses } from "@/lib/mock-data";
+import { getPlaceholderImage } from "@/lib/placeholder-images";
 import {
   Card,
   CardContent,
@@ -9,9 +9,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { BarChart2, Edit, PlusCircle } from 'lucide-react';
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { BarChart2, Edit, PlusCircle } from "lucide-react";
 
 export default function TeacherCoursesPage() {
   return (
@@ -57,10 +57,16 @@ export default function TeacherCoursesPage() {
                     Manage
                   </Button>
                 </Link>
-                <Button variant="secondary" className="w-full" disabled>
-                  <BarChart2 className="mr-2" />
-                  Reports
-                </Button>
+                <Link
+                  href={`/teacher/courses/${course.id}?view=ist-report`}
+                  passHref
+                  className="w-full"
+                >
+                  <Button variant="secondary" className="w-full">
+                    <BarChart2 className="mr-2" />
+                    Reports
+                  </Button>
+                </Link>
               </CardFooter>
             </Card>
           );

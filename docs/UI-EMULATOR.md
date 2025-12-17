@@ -209,7 +209,7 @@ http://localhost:9002/student/courses/cs202
 **Additionally, an Intent Inspector block appears** below your user message, showing:
 
 - **Primary Intent**: e.g., `ASK_EXPLANATION` with confidence `0.85`
-- **Skills List**: 
+- **Skills List**:
   - Each skill shows: `displayName`, `confidence: 0.8`, `role: FOCUS` or `SECONDARY`
   - Example: `Bayes' theorem` (FOCUS), `Probability` (SECONDARY)
 - **Trajectory**:
@@ -351,7 +351,7 @@ Use this checklist to verify everything is working correctly:
 1. Functions TypeScript code hasn't been compiled
 2. `functions/lib/index.js` doesn't exist
 
-**Solution**: 
+**Solution**:
 ```bash
 cd functions
 npm run build
@@ -365,7 +365,7 @@ Then restart the Firebase emulator.
 2. Virtual environment not activated
 3. Dependencies not installed
 
-**Solution**: 
+**Solution**:
 - Check `dspy_service/.env` file exists and has valid API keys
 - Ensure virtual environment is activated
 - Run `pip install -r requirements.txt` in `dspy_service/`
@@ -377,7 +377,7 @@ Then restart the Firebase emulator.
 2. Wrong collection/document path
 3. Emulator was restarted (data is in-memory only)
 
-**Solution**: 
+**Solution**:
 - Check Functions emulator logs for write confirmation
 - Verify the document path matches: `threads/{threadId}/analysis/{messageId}`
 - Note: Emulator data is cleared when you stop it
@@ -390,3 +390,86 @@ This guide provides a complete walkthrough for running the CourseWise UI with Fi
 
 **Key takeaway**: The IST pipeline now works end-to-end from UI → Cloud Function → DSPy → Firestore → IntentInspector, providing both real-time UI feedback and persistent storage for analysis.
 
+---
+
+## Partner Setup (Required Files in .gitignore)
+
+This section explains how to set up the local environment from scratch, specifically addressing the configuration files that are intentionally gitignored.
+
+### 1) Prerequisites
+
+*   **Node.js**: v18+ (verified with v22.x) and `npm`.
+*   **Python**: 3.8+ (for DSPy service).
+*   **Firebase CLI**: `npm install -g firebase-tools`.
+    *   Verify with `firebase --version`.
+*   **Java**: Required for Firebase Emulators. Verify with `java -version`.
+
+### 2) Required Local Files (Not Committed)
+
+The following files are excluded from Git but are **required** for the system to run. You must create them locally.
+
+| File Path | Purpose | How to Create |
+| :--- | :--- | :--- |
+| **`.env.local`** (Root) | Environment variables for Next.js and Firebase config. | **Copy from example**: <br> `cp .env.example .env.local` <br> *(Windows: `copy .env.example .env.local`)* |
+| **`dspy_service/.env`** | Secrets for the Python service (e.g., API keys). | **Copy from example**: <br> `cp dspy_service/.env.example dspy_service/.env` <br> **Important**: You MUST edit this file to add your `OPENAI_API_KEY` (or Gemini key). |
+| **`src/mocks/ist/events.json`** | Local storage for IST pipeline events (JSON fallback). | **Copy from example**: <br> `cp src/mocks/ist/events.json.example src/mocks/ist/events.json` <br> *(This creates an empty array `[]`)* |
+
+### 3) Exact Commands to Run (Order Matters)
+
+Open **three** separate terminals and run these commands in order:
+
+#### Terminal 1: Firebase Emulators
+```bash
+firebase emulators:start
+```
+*Wait for "All emulators ready" message.*
+
+#### Terminal 2: DSPy Service
+Navigate to the service directory and activate the virtual environment:
+
+**Windows PowerShell:**
+```powershell
+cd dspy_service
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+# If uvicorn is missing:
+# pip install "uvicorn[standard]" fastapi
+python -m uvicorn app:app --reload --port 8000
+```
+
+**Mac/Linux:**
+```bash
+cd dspy_service
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python3 -m uvicorn app:app --reload --port 8000
+```
+
+#### Terminal 3: Next.js Dev Server
+```bash
+npm install
+npm run dev
+```
+
+**Main URLs:**
+*   **Student UI**: [http://localhost:9002/student/courses/cs202](http://localhost:9002/student/courses/cs202)
+*   **Data Connect Debug**: [http://localhost:9002/ist-dev/dataconnect](http://localhost:9002/ist-dev/dataconnect)
+
+### 4) Verification Checklist (UI + Logs)
+
+Confirm everything is working by checking these indicators:
+
+*   [ ] **Functions Emulator Logs**: Look for "Successfully wrote analysis to Firestore" after sending a chat message.
+*   [ ] **Next.js Logs**: detailed logs showing `[IST][Context][DEMO] Using demo identity` and loaded IST history counts.
+*   [ ] **DSPy Logs**: confirmation of received request, e.g., `[IST] Processing request...` and `chat_history` sizes.
+*   [ ] **Data Connect UI**: Visit `/ist-dev/dataconnect` and check that new records appear with utterance, intent, skills, and trajectory.
+
+### 5) Common Problems and Fixes
+
+*   **Missing `.env.local` values**: If the UI fails to load or connect to Firebase, ensure `.env.local` exists and has `NEXT_PUBLIC_FIREBASE_USE_EMULATOR=true`.
+*   **DSPy venv not activated**: If you see `Module not found` errors in Python, verify your prompt shows `(.venv)` or that you ran the activate script.
+*   **`No module named uvicorn`**: Run `pip install "uvicorn[standard]"` inside your activated virtual environment.
+*   **Ports already in use**: Ensure ports **9002** (Next.js), **8000** (DSPy), and **9399** (Data Connect) are free. Terminate old processes if needed.
+*   **Emulators not running**: If the UI shows empty results or network errors, check Terminal 1. The emulators must be running for the local app to work.
