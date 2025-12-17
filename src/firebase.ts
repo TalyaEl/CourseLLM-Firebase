@@ -44,13 +44,27 @@ export const functions = getFunctions(app);
 if (process.env.NEXT_PUBLIC_FIREBASE_USE_EMULATOR === 'true') {
   const firestoreHost = process.env.FIRESTORE_EMULATOR_HOST || 'localhost';
   const firestorePort = Number(process.env.FIRESTORE_EMULATOR_PORT) || 8080;
-  connectFirestoreEmulator(db, firestoreHost, firestorePort);
-
   const functionsHost = process.env.FIREBASE_FUNCTIONS_EMULATOR_HOST || 'localhost';
   const functionsPort = Number(process.env.FIREBASE_FUNCTIONS_EMULATOR_PORT) || 5001;
-  connectFunctionsEmulator(functions, functionsHost, functionsPort);
 
-  console.log('[Firebase] Connected to Firestore & Functions emulators');
+  console.log('[Firebase] Emulator mode enabled. Firestore emulator ->', firestoreHost + ':' + firestorePort);
+  console.log('[Firebase] Emulator mode enabled. Functions emulator ->', functionsHost + ':' + functionsPort);
+
+  try {
+    connectFirestoreEmulator(db, firestoreHost, firestorePort);
+    console.log('[Firebase] connectFirestoreEmulator() succeeded');
+  } catch (e) {
+    console.error('[Firebase] connectFirestoreEmulator() failed:', e);
+  }
+
+  try {
+    connectFunctionsEmulator(functions, functionsHost, functionsPort);
+    console.log('[Firebase] connectFunctionsEmulator() succeeded');
+  } catch (e) {
+    console.error('[Firebase] connectFunctionsEmulator() failed:', e);
+  }
+
+  console.log('[Firebase] Attempted to connect to Firestore & Functions emulators');
 }
 
 export const analyzeMessageFn = httpsCallable(functions, 'analyzeMessage');

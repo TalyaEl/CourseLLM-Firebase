@@ -15,20 +15,52 @@ export default function IntentInspector({
   messageId,
 }: IntentInspectorProps) {
   const [analysis, setAnalysis] = useState<MessageAnalysis | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const ref = doc(db, 'threads', threadId, 'analysis', messageId);
 
-    const unsubscribe = onSnapshot(ref, (snapshot) => {
-      if (snapshot.exists()) {
-        setAnalysis(snapshot.data() as MessageAnalysis);
-      } else {
-        console.warn(
-          `Analysis document not found for threadId=${threadId}, messageId=${messageId}`
-        );
-        setAnalysis(null);
-      }
-    });
+    setLoading(true);
+    setError(null);
+
+    if (!threadId || !messageId) {
+      setError('Missing threadId or messageId for IntentInspector');
+      setAnalysis(null);
+      setLoading(false);
+      return;
+    }
+
+    let unsubscribe = () => {};
+    try {
+      unsubscribe = onSnapshot(
+        ref,
+        (snapshot) => {
+          setLoading(false);
+          if (snapshot.exists()) {
+            setAnalysis(snapshot.data() as MessageAnalysis);
+            setError(null);
+          } else {
+            console.warn(
+              `Analysis document not found for threadId=${threadId}, messageId=${messageId}`
+            );
+            setAnalysis(null);
+          }
+        },
+        (err) => {
+          console.error('[IntentInspector] Firestore onSnapshot error:', err);
+          const msg = err && (err.code ? `${err.code}: ${err.message}` : err.message) ? `${err.code ?? ''} ${err.message ?? String(err)}`.trim() : 'Unknown Firestore error';
+          setError(msg);
+          setAnalysis(null);
+          setLoading(false);
+        }
+      );
+    } catch (e) {
+      console.error('[IntentInspector] Error subscribing to snapshot:', e);
+      setError(String((e && (e.message || e)) || 'Unknown error'));
+      setAnalysis(null);
+      setLoading(false);
+    }
 
     return () => unsubscribe();
   }, [threadId, messageId]);
@@ -37,7 +69,16 @@ export default function IntentInspector({
     return (
       <div>
         <h2>Intent Inspector</h2>
-        <p>No analysis available for this message.</p>
+        {loading ? (
+          <p>Loading analysis...</p>
+        ) : error ? (
+          <div>
+            <p style={{ color: 'crimson' }}>Firestore error: {error}</p>
+            <p>No analysis available for this message.</p>
+          </div>
+        ) : (
+          <p>No analysis available for this message.</p>
+        )}
       </div>
     );
   }
