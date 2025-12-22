@@ -2,14 +2,10 @@
 
 /**
  * @fileOverview Implements a Socratic chat flow for students to interact with course content.
- *
- * - socraticCourseChat - A function that orchestrates the Socratic chat experience.
- * - SocraticCourseChatInput - The input type for the socraticCourseChat function.
- * - SocraticCourseChatOutput - The return type for the socraticCourseChat function.
  */
-
-import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import { courseModel } from '../genkit'; 
+import { ai } from '@/ai/genkit';
+import { z } from 'genkit';
 
 const SocraticCourseChatInputSchema = z.object({
   courseMaterial: z
@@ -39,8 +35,7 @@ const enforceCompliance = ai.defineTool({
   }),
   outputSchema: z.boolean().describe('Returns true if the response complies with the course material, otherwise returns false.'),
 }, async (input) => {
-  // TODO: Implement the compliance check logic here. This is a placeholder.
-  // For now, we'll just assume it always complies.
+  // TODO: Implement the compliance check logic here.
   console.log(`Course Material: ${input.courseMaterial}`);
   console.log(`AI Response: ${input.response}`);
   return true;
@@ -48,8 +43,9 @@ const enforceCompliance = ai.defineTool({
 
 const socraticPrompt = ai.definePrompt({
   name: 'socraticCourseChatPrompt',
-  input: {schema: SocraticCourseChatInputSchema},
-  output: {schema: SocraticCourseChatOutputSchema},
+  model: courseModel, 
+  input: { schema: SocraticCourseChatInputSchema },
+  output: { schema: SocraticCourseChatOutputSchema },
   tools: [enforceCompliance],
   prompt: `You are a Socratic tutor guiding a student through course material. Ask questions that encourage critical thinking and deeper understanding, referencing only the provided course material.
 
@@ -69,16 +65,15 @@ const socraticCourseChatFlow = ai.defineFlow(
     outputSchema: SocraticCourseChatOutputSchema,
   },
   async input => {
-    const {output} = await socraticPrompt(input);
+    const { output } = await socraticPrompt(input);
 
-    // Call the enforceCompliance tool to ensure compliance with course material
     const complianceResult = await enforceCompliance({
       courseMaterial: input.courseMaterial,
       response: output!.response,
     });
 
     if (!complianceResult) {
-      return {response: 'I am unable to provide a compliant response based on the course materials.'};
+      return { response: 'I am unable to provide a compliant response based on the course materials.' };
     }
 
     return output!;
