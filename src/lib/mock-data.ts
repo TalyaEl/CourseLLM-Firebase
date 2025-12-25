@@ -21,7 +21,7 @@ export const courses: Course[] = [
     learningTrajectories: 'Beginner -> Intermediate',
   },
   {
-    id: 'cs202',
+    id: 'cs-demo-101',
     title: 'Data Structures & Algorithms',
     description: 'A deep dive into common data structures and algorithms.',
     imageId: 'course-6',
@@ -52,7 +52,7 @@ export const studentProgress: StudentProgress[] = [
     { studentId: 'student-1', courseId: 'cs101', progress: 75, questionsAsked: 12, lastAccessed: '2024-05-20T10:00:00Z' },
     { studentId: 'student-2', courseId: 'cs101', progress: 45, questionsAsked: 5, lastAccessed: '2024-05-19T14:30:00Z' },
     { studentId: 'student-3', courseId: 'cs101', progress: 90, questionsAsked: 25, lastAccessed: '2024-05-21T09:00:00Z' },
-    { studentId: 'student-1', courseId: 'cs202', progress: 30, questionsAsked: 8, lastAccessed: '2024-05-18T11:00:00Z' },
+    { studentId: 'student-1', courseId: 'cs-demo-101', progress: 30, questionsAsked: 8, lastAccessed: '2024-05-18T11:00:00Z' },
 ];
 
 export const engagementData: EngagementData[] = [

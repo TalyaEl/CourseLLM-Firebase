@@ -41,8 +41,8 @@ function getOrInitDataConnect() {
     const dc = getDataConnect(connectorConfig);
 
     if (process.env.FUNCTIONS_EMULATOR === 'true') {
-      // Port 9399 is defined in firebase.json for the Data Connect emulator
-      connectDataConnectEmulator(dc, '127.0.0.1', 9399);
+      // Port 9400 is defined in firebase.json for the Data Connect emulator
+      connectDataConnectEmulator(dc, 'localhost', 9400);
     }
 
     dataConnectInstance = dc;

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import json
+import re
 from typing import List, Optional, Literal
 from pydantic import BaseModel
 
@@ -131,65 +132,88 @@ class IntentSkillTrajectorySignature(dspy.Signature):
     - Identify which CS skills or concepts are relevant (skills).
     - Suggest next learning steps that build on this student's history (trajectory).
 
-    Consider all provided context:
-    - The student_profile shows their strengths, weaknesses, and progress.
-    - The ist_history shows previous learning patterns and trajectories (DO NOT repeat identical steps).
-    - The chat_history shows the conversation flow.
-    - The course_context provides topic/syllabus information.
+    Context Analysis:
+    - Use the course_context to understand the current topic (e.g., Data Structures, Algorithms).
+    - The student_profile shows their strengths and weaknesses (personalize your suggestions).
+    - The ist_history shows previous learning patterns (DO NOT repeat identical trajectories).
+    - The chat_history shows the conversation flow (use recent messages for context).
 
-    You MUST always return:
-      - intent: 1 short English sentence describing what the student is trying to do or ask.
-      - skills: 3–7 key CS skills or concepts as an array of strings.
-      - trajectory: 3–5 concrete next learning steps that build on (not repeat) previous trajectories.
+    Intent Categories (pick the most relevant):
+    - "Clarification": Student asks for explanation of a concept
+    - "Debugging": Student is trying to fix code or logic
+    - "Review": Student wants to understand something covered before
+    - "New Topic": Student is learning something new
+    - "Validation": Student wants feedback on their solution
 
-    Never leave skills or trajectory empty.
-    Return ONLY a JSON object with keys: intent, skills, trajectory.
+    CRITICAL OUTPUT FORMAT:
+    You MUST return ONLY a raw JSON object with NO markdown code blocks.
+    Do NOT include ```json or ``` markers.
+    Do NOT include any text before or after the JSON.
+    The JSON must be valid and parseable.
+
+    JSON structure (EXACT, no variations):
+    {
+      "intent": "One short English sentence describing what the student needs",
+      "skills": ["skill1", "skill2", "skill3", "skill4", "skill5"],
+      "trajectory": ["step1", "step2", "step3", "step4", "step5"]
+    }
+
+    Field Requirements:
+    - intent: string (1 sentence, under 100 characters)
+    - skills: array of 4-7 strings (specific CS concepts, not generic)
+    - trajectory: array of 4-5 strings (actionable learning steps)
+
+    Rules:
+    - NEVER wrap in ```json or ```
+    - NEVER include explanations outside the JSON
+    - NEVER leave fields empty or null
+    - NEVER use generic skills like "thinking" or "learning"
+    - Output ONLY the JSON object, nothing else
     """
 
     utterance = dspy.InputField(
-        desc="Current student question/utterance (can be in Hebrew or any language)."
+        desc="Current student question/utterance in their own words (may be in Hebrew or English)."
     )
     course_context = dspy.InputField(
-        desc="Course context (course name, topic, week, syllabus snippet). May be empty.",
+        desc="Current course/topic context (e.g., 'Data Structures - Week 3 - Linked Lists'). Use this to interpret the utterance correctly.",
         default="",
     )
-    # STEP 5: Extended context fields (optional, defaults handled in forward method)
     chat_history = dspy.InputField(
-        desc="Recent chat history formatted as readable text. Shows conversation flow between student and tutor. May be empty.",
+        desc="Recent conversation history (student and tutor messages). Use to understand context and avoid repetition.",
         default="",
     )
     ist_history = dspy.InputField(
-        desc="Recent IST history formatted as readable text. Shows previous intents, skills, and trajectories. Use this to avoid repetition and build progression. May be empty.",
+        desc="Previous IST events extracted from this student. Use to build progression and avoid repeating prior trajectories.",
         default="",
     )
     student_profile = dspy.InputField(
-        desc="Student learning profile formatted as readable text. Shows strong skills, weak skills, and course progress. Use this to personalize recommendations. May be empty.",
+        desc="Student profile (strong/weak skills, progress). Use to personalize recommendations.",
         default="",
     )
 
-    intent = dspy.OutputField(
-        desc="Short English sentence describing the student's intent."
-    )
-    skills = dspy.OutputField(
-        desc="List of specific skills or concepts the student needs."
-    )
-    trajectory = dspy.OutputField(
-        desc="List of concrete next-learning actions, in order."
+    structured_analysis = dspy.OutputField(
+        desc="Raw JSON object (no markdown) with exactly these keys: 'intent' (string), 'skills' (array), 'trajectory' (array). Output ONLY the JSON."
     )
 
 
 class IntentSkillTrajectoryModule(dspy.Module):
     """
-    DSPy module that uses the above signature to extract:
-    - intent
-    - skills[]
-    - trajectory[]
-    from a student's utterance.
+    DSPy module using ChainOfThought for reasoning before JSON output.
+    Extracts intent, skills, and trajectory from student utterances.
     """
 
     def __init__(self) -> None:
         super().__init__()
-        self.predict = dspy.Predict(IntentSkillTrajectorySignature)
+        # Use ChainOfThought instead of basic Predict for better reasoning
+        self.predict = dspy.ChainOfThought(IntentSkillTrajectorySignature)
+
+    # Glossary of valid intent categories
+    VALID_INTENTS = {
+        "conceptual_question": "Student is asking for clarification or explanation of a concept",
+        "debugging": "Student is trying to fix code or logic errors",
+        "practice_request": "Student wants to practice or work through problems",
+        "platform_issue": "Student is having issues with the platform or tools",
+    }
 
     def forward(
         self,
@@ -200,330 +224,376 @@ class IntentSkillTrajectoryModule(dspy.Module):
         student_profile: Optional[StudentProfile] = None,
     ) -> dict:
         """
-        Run the LM via DSPy with enriched context and normalize the outputs to a clean dict:
-
-        {
-          "intent": str,
-          "skills": List[str],
-          "trajectory": List[str],
-        }
+        Run the LM with ChainOfThought reasoning, then parse the JSON output.
+        Returns a clean dict: {"intent": str, "skills": List[str], "trajectory": List[str]}
         
-        STEP 5: Now accepts and uses chat_history, ist_history, and student_profile
-        to provide more context-aware IST extraction.
+        This method implements comprehensive error handling with full traceback exposure.
         """
         import traceback
+        import re
         
-        # Normalize inputs - convert from app.py Pydantic models to dspy_flows models if needed
+        print(f"\n[IST] ===== STARTING IST EXTRACTION =====")
+        print(f"[IST] Utterance: {utterance[:80]}")
+        print(f"[IST] Course context: {course_context or '(none)'}")
+        
+        # Normalize inputs
         if chat_history is None:
             chat_history = []
         else:
-            # Convert app.py ChatMessage models to dspy_flows ChatMessage models
-            chat_history = [
-                ChatMessage(**msg.model_dump() if hasattr(msg, 'model_dump') else msg.dict())
-                if not isinstance(msg, ChatMessage) else msg
-                for msg in chat_history
-            ]
+            try:
+                chat_history = [
+                    ChatMessage(**msg.model_dump() if hasattr(msg, 'model_dump') else msg.dict())
+                    if not isinstance(msg, ChatMessage) else msg
+                    for msg in chat_history
+                ]
+            except Exception as e:
+                print(f"[IST] ⚠️ Error normalizing chat_history: {type(e).__name__}: {e}")
+                chat_history = []
         
         if ist_history is None:
             ist_history = []
         else:
-            # Convert app.py IstHistoryItem models to dspy_flows IstHistoryItem models
-            ist_history = [
-                IstHistoryItem(**item.model_dump() if hasattr(item, 'model_dump') else item.dict())
-                if not isinstance(item, IstHistoryItem) else item
-                for item in ist_history
-            ]
+            try:
+                ist_history = [
+                    IstHistoryItem(**item.model_dump() if hasattr(item, 'model_dump') else item.dict())
+                    if not isinstance(item, IstHistoryItem) else item
+                    for item in ist_history
+                ]
+            except Exception as e:
+                print(f"[IST] ⚠️ Error normalizing ist_history: {type(e).__name__}: {e}")
+                ist_history = []
         
-        # Convert student_profile if provided
         if student_profile is not None and not isinstance(student_profile, StudentProfile):
-            if hasattr(student_profile, 'model_dump'):
-                student_profile = StudentProfile(**student_profile.model_dump())
-            elif hasattr(student_profile, 'dict'):
-                student_profile = StudentProfile(**student_profile.dict())
-            elif isinstance(student_profile, dict):
-                student_profile = StudentProfile(**student_profile)
+            try:
+                if hasattr(student_profile, 'model_dump'):
+                    student_profile = StudentProfile(**student_profile.model_dump())
+                elif hasattr(student_profile, 'dict'):
+                    student_profile = StudentProfile(**student_profile.dict())
+                elif isinstance(student_profile, dict):
+                    student_profile = StudentProfile(**student_profile)
+            except Exception as e:
+                print(f"[IST] ⚠️ Error normalizing student_profile: {type(e).__name__}: {e}")
+                student_profile = None
         
-        # Build formatted context sections for the prompt
+        # Build formatted context sections
         profile_section = self._build_profile_section(student_profile)
         ist_history_section = self._build_ist_history_section(ist_history)
         chat_history_section = self._build_chat_history_section(chat_history)
         
-        # Format context as readable strings for the LLM (DSPy will inject these into the prompt)
-        chat_history_formatted = chat_history_section
-        ist_history_formatted = ist_history_section
-        student_profile_formatted = profile_section
-        
+        # ===== STEP 1: Call ChainOfThought =====
+        pred = None
         try:
-            # STEP 5: Pass enriched context to the predictor
-            # The formatted strings will be included in the prompt via the signature input fields
+            print(f"[IST] Step 1: Calling dspy.ChainOfThought...")
             pred = self.predict(
                 utterance=utterance,
                 course_context=course_context or "",
-                chat_history=chat_history_formatted,
-                ist_history=ist_history_formatted,
-                student_profile=student_profile_formatted,
+                chat_history=chat_history_section,
+                ist_history=ist_history_section,
+                student_profile=profile_section,
             )
+            print(f"[IST] ✓ ChainOfThought returned successfully")
+            print(f"[IST]   Type: {type(pred).__name__}")
+            print(f"[IST]   Is dict: {isinstance(pred, dict)}")
         except Exception as e:
-            print(f"[IST] DSPy predict() failed: {type(e).__name__}: {e}")
-            print(f"[IST] Traceback:\n{traceback.format_exc()}")
-            # Return a safe fallback
-            return {
-                "intent": "Unable to extract intent - parsing error occurred.",
-                "skills": ["Error parsing skills"],
-                "trajectory": ["Review the error logs", "Retry the request"],
-            }
+            print(f"[IST] ❌ FAILED AT STEP 1: ChainOfThought call")
+            print(f"[IST] Exception type: {type(e).__name__}")
+            print(f"[IST] Exception message: {str(e)}")
+            print(f"[IST] Full traceback:")
+            print(traceback.format_exc())
+            return self._fallback_response("LLM call failed")
 
-        # Safely extract raw fields from DSPy prediction
-        # Handle both structured output (attribute-based) and JSON fallback mode
-        intent_raw = None
-        raw_skills = None
-        raw_traj = None
-        
+        # ===== STEP 2: Extract structured_analysis field =====
+        structured_output = None
         try:
-            # Method 1: Try standard attribute access (structured output mode)
-            intent_raw = getattr(pred, "intent", None)
-            raw_skills = getattr(pred, "skills", None)
-            raw_traj = getattr(pred, "trajectory", None)
+            print(f"[IST] Step 2: Extracting structured_analysis field...")
             
-            # Method 2: If attributes are None or empty, try dict access
-            if (intent_raw is None or raw_skills is None or raw_traj is None):
-                if hasattr(pred, "__dict__"):
-                    pred_dict = pred.__dict__
-                    if intent_raw is None:
-                        intent_raw = pred_dict.get("intent", None)
-                    if raw_skills is None:
-                        raw_skills = pred_dict.get("skills", None)
-                    if raw_traj is None:
-                        raw_traj = pred_dict.get("trajectory", None)
-                elif isinstance(pred, dict):
-                    if intent_raw is None:
-                        intent_raw = pred.get("intent", None)
-                    if raw_skills is None:
-                        raw_skills = pred.get("skills", None)
-                    if raw_traj is None:
-                        raw_traj = pred.get("trajectory", None)
+            # Try multiple methods to get the field
+            if hasattr(pred, 'structured_analysis'):
+                structured_output = getattr(pred, 'structured_analysis', None)
+                print(f"[IST] ✓ Found via attribute access")
             
-            # Method 3: If we still have None values, try parsing as JSON string
-            # (This handles the case when DSPy falls back to JSON mode)
-            if (intent_raw is None or raw_skills is None or raw_traj is None):
-                # Check if pred itself is a string that might be JSON
-                if isinstance(pred, str):
-                    try:
-                        parsed = json.loads(pred)
-                        if isinstance(parsed, dict):
-                            if intent_raw is None:
-                                intent_raw = parsed.get("intent", None)
-                            if raw_skills is None:
-                                raw_skills = parsed.get("skills", None)
-                            if raw_traj is None:
-                                raw_traj = parsed.get("trajectory", None)
-                    except (json.JSONDecodeError, ValueError):
-                        pass
-                
-                # Check if any individual field is a JSON string
-                for field_name, field_value in [("intent", intent_raw), ("skills", raw_skills), ("trajectory", raw_traj)]:
-                    if field_value is not None and isinstance(field_value, str):
-                        # Try to parse if it looks like JSON
-                        if field_value.strip().startswith("{") or field_value.strip().startswith("["):
-                            try:
-                                parsed = json.loads(field_value)
-                                if field_name == "intent" and intent_raw is None:
-                                    if isinstance(parsed, dict):
-                                        intent_raw = parsed.get("intent", None)
-                                    else:
-                                        intent_raw = str(parsed)
-                                elif field_name == "skills" and raw_skills is None:
-                                    if isinstance(parsed, list):
-                                        raw_skills = parsed
-                                    elif isinstance(parsed, dict):
-                                        raw_skills = parsed.get("skills", None)
-                                elif field_name == "trajectory" and raw_traj is None:
-                                    if isinstance(parsed, list):
-                                        raw_traj = parsed
-                                    elif isinstance(parsed, dict):
-                                        raw_traj = parsed.get("trajectory", None)
-                            except (json.JSONDecodeError, ValueError):
-                                # If json_repair is available, try it
-                                if json_repair is not None:
-                                    try:
-                                        parsed = json_repair.repair_json(field_value)
-                                        parsed = json.loads(parsed)
-                                        if field_name == "intent" and intent_raw is None:
-                                            intent_raw = parsed.get("intent") if isinstance(parsed, dict) else str(parsed)
-                                        elif field_name == "skills" and raw_skills is None:
-                                            raw_skills = parsed if isinstance(parsed, list) else (parsed.get("skills") if isinstance(parsed, dict) else None)
-                                        elif field_name == "trajectory" and raw_traj is None:
-                                            raw_traj = parsed if isinstance(parsed, list) else (parsed.get("trajectory") if isinstance(parsed, dict) else None)
-                                    except Exception:
-                                        pass
+            if structured_output is None and isinstance(pred, dict):
+                structured_output = pred.get('structured_analysis', None)
+                print(f"[IST] ✓ Found via dict.get()")
             
-            # Set defaults if still None
-            if intent_raw is None:
-                intent_raw = ""
-            if raw_skills is None:
-                raw_skills = []
-            if raw_traj is None:
-                raw_traj = []
+            if structured_output is None and hasattr(pred, '__dict__'):
+                structured_output = pred.__dict__.get('structured_analysis', None)
+                print(f"[IST] ✓ Found via __dict__.get()")
             
-            # Debug logging
-            print(f"[IST] Extracted fields - intent type: {type(intent_raw)}, skills type: {type(raw_skills)}, trajectory type: {type(raw_traj)}")
+            if structured_output is None:
+                print(f"[IST] ❌ structured_analysis NOT FOUND")
+                print(f"[IST] Available attributes/keys:")
+                if isinstance(pred, dict):
+                    for key in pred.keys():
+                        print(f"[IST]   - {key}: {type(pred.get(key)).__name__}")
+                elif hasattr(pred, '__dict__'):
+                    for key in pred.__dict__.keys():
+                        print(f"[IST]   - {key}: {type(getattr(pred, key)).__name__}")
+                raise KeyError("structured_analysis field not found in ChainOfThought output")
             
+            print(f"[IST] ✓ structured_analysis extracted")
+            print(f"[IST]   Type: {type(structured_output).__name__}")
+            print(f"[IST]   Length: {len(str(structured_output)) if structured_output else 0}")
+        
         except Exception as e:
-            print(f"[IST] Error extracting fields from DSPy prediction: {type(e).__name__}: {e}")
-            print(f"[IST] Prediction object type: {type(pred)}")
-            if hasattr(pred, "__dict__"):
-                print(f"[IST] Prediction __dict__ keys: {list(pred.__dict__.keys())[:10]}")
-            # Fallback to safe defaults
-            intent_raw = ""
-            raw_skills = []
-            raw_traj = []
+            print(f"[IST] ❌ FAILED AT STEP 2: Field extraction")
+            print(f"[IST] Exception type: {type(e).__name__}")
+            print(f"[IST] Exception message: {str(e)}")
+            print(f"[IST] Full traceback:")
+            print(traceback.format_exc())
+            return self._fallback_response("Field extraction failed")
 
-        # Normalize intent to string
-        intent = (str(intent_raw) if intent_raw is not None else "").strip()
+        # ===== STEP 3: Sanitize and parse JSON =====
+        try:
+            print(f"[IST] Step 3: Sanitizing and parsing JSON...")
+            
+            # Convert to string
+            if structured_output is None:
+                raise ValueError("structured_output is None after extraction")
+            
+            structured_output = str(structured_output).strip()
+            print(f"[IST] ✓ Converted to string, length: {len(structured_output)}")
+            
+            # Remove markdown formatting
+            structured_output = self._remove_markdown_formatting(structured_output)
+            print(f"[IST] ✓ Markdown removed, length: {len(structured_output)}")
+            
+            # Extra trim in case of edge cases
+            structured_output = structured_output.strip()
+            
+            if not structured_output:
+                raise ValueError("structured_output is empty after sanitization")
+            
+            print(f"[IST] Raw JSON (first 200 chars): {structured_output[:200]}")
+            
+            # Parse JSON with explicit error handling
+            parsed = json.loads(structured_output)
+            print(f"[IST] ✓ JSON parsed successfully")
+            
+            if not isinstance(parsed, dict):
+                raise ValueError(f"Expected JSON object, got {type(parsed).__name__}")
+            
+            print(f"[IST] ✓ Verified as dict")
+            print(f"[IST]   Keys: {list(parsed.keys())}")
+        
+        except json.JSONDecodeError as e:
+            print(f"[IST] ❌ FAILED AT STEP 3: JSON Parse Error")
+            print(f"[IST] Error: {str(e)}")
+            print(f"[IST] Position: line {e.lineno}, column {e.colno}")
+            print(f"[IST] Raw output: {structured_output[:300] if structured_output else '(empty)'}")
+            print(f"[IST] Full traceback:")
+            print(traceback.format_exc())
+            
+            # Try json_repair
+            if json_repair is not None:
+                try:
+                    print(f"[IST] Attempting json_repair...")
+                    repaired = json_repair.repair_json(structured_output)
+                    parsed = json.loads(repaired)
+                    print(f"[IST] ✓ json_repair succeeded")
+                except Exception as repair_err:
+                    print(f"[IST] json_repair failed: {type(repair_err).__name__}")
+                    return self._fallback_response("JSON parse failed")
+            else:
+                return self._fallback_response("JSON parse failed")
+        
+        except Exception as e:
+            print(f"[IST] ❌ FAILED AT STEP 3: Other error")
+            print(f"[IST] Exception type: {type(e).__name__}")
+            print(f"[IST] Exception message: {str(e)}")
+            print(f"[IST] Full traceback:")
+            print(traceback.format_exc())
+            return self._fallback_response("Sanitization/parsing failed")
 
-        def normalize_list(value) -> List[str]:
-            """
-            Normalize LM output into a list of non-empty strings.
+        # ===== STEP 4: Extract and validate fields =====
+        try:
+            print(f"[IST] Step 4: Extracting and validating fields...")
+            
+            # Use .get() for safe dictionary access
+            intent = str(parsed.get("intent", "")).strip() if isinstance(parsed, dict) else ""
+            skills_raw = parsed.get("skills", []) if isinstance(parsed, dict) else []
+            trajectory_raw = parsed.get("trajectory", []) if isinstance(parsed, dict) else []
+            
+            print(f"[IST] ✓ Fields extracted:")
+            print(f"[IST]   - intent: '{intent[:60]}' (len={len(intent)})")
+            print(f"[IST]   - skills_raw: {type(skills_raw).__name__} with {len(skills_raw) if isinstance(skills_raw, list) else 1} items")
+            print(f"[IST]   - trajectory_raw: {type(trajectory_raw).__name__} with {len(trajectory_raw) if isinstance(trajectory_raw, list) else 1} items")
+            
+            # Normalize lists
+            skills = self._normalize_list(skills_raw)
+            trajectory = self._normalize_list(trajectory_raw)
+            
+            print(f"[IST] ✓ Lists normalized:")
+            print(f"[IST]   - skills: {len(skills)} items")
+            print(f"[IST]   - trajectory: {len(trajectory)} items")
+            
+            # Validate intent against glossary
+            intent_category = self._validate_intent(intent, course_context)
+            print(f"[IST] ✓ Intent validated: {intent_category}")
+            
+            # Apply fallbacks
+            if not intent:
+                intent = "Student is asking for help with a course concept."
+            if not skills:
+                skills = ["Concept understanding", "Problem-solving"]
+            if not trajectory:
+                trajectory = ["Review lecture materials", "Practice problems", "Ask clarifying questions"]
+            
+            print(f"[IST] ✅ STEP 4 SUCCESS - All fields extracted and validated")
+            print(f"[IST] Final result:")
+            print(f"[IST]   - intent: {intent[:60]}...")
+            print(f"[IST]   - skills: {skills}")
+            print(f"[IST]   - trajectory: {trajectory}")
+            
+            return {
+                "intent": intent,
+                "skills": skills,
+                "trajectory": trajectory,
+            }
+        
+        except Exception as e:
+            print(f"[IST] ❌ FAILED AT STEP 4: Field extraction/validation")
+            print(f"[IST] Exception type: {type(e).__name__}")
+            print(f"[IST] Exception message: {str(e)}")
+            print(f"[IST] Full traceback:")
+            print(traceback.format_exc())
+            return self._fallback_response("Field validation failed")
 
-            Supports:
-              - already-a-list → return cleaned list
-              - JSON array string (e.g., '["item1", "item2"]') → parse JSON
-              - newline / bullet / comma separated string → split and parse
-            """
-            # Case 1: Already a list
-            if isinstance(value, list):
-                result = [str(x).strip() for x in value if str(x).strip()]
-                print(f"[IST] Normalized list from list type: {len(result)} items")
-                return result
-
-            # Case 2: String that might be a JSON array
-            if isinstance(value, str):
-                text = value.strip()
-                
-                # Try to parse as JSON array string first
-                if text.startswith("[") and text.endswith("]"):
-                    try:
-                        parsed = json.loads(text)
-                        if isinstance(parsed, list):
-                            # Successfully parsed JSON array
-                            result = [str(x).strip() for x in parsed if str(x).strip()]
-                            if result:
-                                print(f"[IST] Normalized list from JSON string: {len(result)} items")
-                                return result
-                    except (json.JSONDecodeError, ValueError) as e:
-                        # JSON parsing failed, try json_repair if available
-                        if json_repair is not None:
-                            try:
-                                repaired = json_repair.repair_json(text)
-                                parsed = json.loads(repaired)
-                                if isinstance(parsed, list):
-                                    result = [str(x).strip() for x in parsed if str(x).strip()]
-                                    if result:
-                                        print(f"[IST] Normalized list from repaired JSON: {len(result)} items")
-                                        return result
-                            except Exception:
-                                pass
-                        print(f"[IST] Failed to parse as JSON, falling back to string splitting: {str(e)[:100]}")
-                
-                # Case 3: Fallback to string splitting if JSON parsing failed or not JSON format
-                # Remove surrounding brackets/quotes that might be left over from failed JSON parsing
-                text = text.strip("[]\"'")
-                text = text.replace("\r", "\n")
-                pieces: List[str] = []
-
-                for line in text.split("\n"):
-                    line = line.strip(" -•\t")
-                    if not line:
-                        continue
-                    # Allow comma / semicolon separated items in the same line.
-                    for chunk in line.replace(";", ",").split(","):
-                        # Clean up quotes and whitespace
-                        chunk = chunk.strip(" -•\t\"'[]")
-                        if chunk:
-                            pieces.append(chunk)
-
-                if pieces:
-                    print(f"[IST] Normalized list from string splitting: {len(pieces)} items")
-                return pieces
-
-            # Fallback: unknown type
-            print(f"[IST] Unknown value type for normalization: {type(value)}")
-            return []
-
-        skills = normalize_list(raw_skills)
-        trajectory = normalize_list(raw_traj)
-
-        # Fallbacks so we NEVER return empty lists
-        if not skills and intent:
-            skills = [f"Understand: {intent}"]
-
-        if not trajectory and intent:
-            trajectory = [
-                "Review the relevant lecture notes or slides.",
-                "Watch a short explanation video on this topic.",
-                "Solve 1–3 simple practice problems about this topic.",
-            ]
-
-        if not intent:
-            intent = "Student is asking for help with a course concept."
-
+    def _fallback_response(self, reason: str) -> dict:
+        """Return a safe fallback response."""
+        print(f"[IST] Using fallback response - Reason: {reason}")
         return {
-            "intent": intent,
-            "skills": skills,
-            "trajectory": trajectory,
+            "intent": "Student is asking for help with a course concept.",
+            "skills": ["Concept understanding", "Problem-solving"],
+            "trajectory": ["Review lecture materials", "Practice problems", "Ask clarifying questions"],
         }
     
+    def _validate_intent(self, intent: str, course_context: str) -> str:
+        """
+        Validate intent against glossary categories.
+        Returns the matched category or the original intent if no match.
+        """
+        if not intent:
+            return "unknown"
+        
+        intent_lower = intent.lower()
+        course_lower = (course_context or "").lower()
+        
+        # Check against valid categories
+        if any(keyword in intent_lower for keyword in ["understand", "explain", "clarify", "confused", "what is"]):
+            return "conceptual_question"
+        elif any(keyword in intent_lower for keyword in ["debug", "error", "fix", "wrong", "broken"]):
+            return "debugging"
+        elif any(keyword in intent_lower for keyword in ["practice", "solve", "problem", "exercise", "try"]):
+            return "practice_request"
+        elif any(keyword in intent_lower for keyword in ["platform", "tool", "system", "can't access", "not working"]):
+            return "platform_issue"
+        else:
+            return "conceptual_question"  # Default to conceptual
+    
+    def _remove_markdown_formatting(self, text: str) -> str:
+        """Strip markdown code block wrappers (```json ... ``` or ``` ... ```)."""
+        # Handle non-string input
+        if not isinstance(text, str):
+            print(f"[IST] WARNING: _remove_markdown_formatting received non-string: {type(text)}")
+            text = str(text) if text is not None else ""
+        
+        # Handle empty string
+        if not text or not text.strip():
+            print(f"[IST] WARNING: _remove_markdown_formatting received empty string")
+            return ""
+        
+        # Remove code block markers
+        text = re.sub(r'^```(?:json)?\s*\n?', '', text)  # Remove opening ```json or ``` with optional newline
+        text = re.sub(r'\n?```\s*$', '', text)  # Remove closing ``` with optional newline
+        
+        cleaned = text.strip()
+        
+        # Log if we made changes
+        if cleaned != text:
+            print(f"[IST] Removed markdown formatting")
+        
+        return cleaned
+    
+    def _normalize_list(self, value) -> List[str]:
+        """Normalize LLM output into a clean list of strings."""
+        if isinstance(value, list):
+            return [str(x).strip() for x in value if str(x).strip()]
+        
+        if isinstance(value, str):
+            text = value.strip()
+            
+            # Try JSON array parsing
+            if text.startswith("[") and text.endswith("]"):
+                try:
+                    parsed = json.loads(text)
+                    if isinstance(parsed, list):
+                        return [str(x).strip() for x in parsed if str(x).strip()]
+                except json.JSONDecodeError:
+                    if json_repair is not None:
+                        try:
+                            repaired = json_repair.repair_json(text)
+                            parsed = json.loads(repaired)
+                            if isinstance(parsed, list):
+                                return [str(x).strip() for x in parsed if str(x).strip()]
+                        except Exception:
+                            pass
+            
+            # Fallback: split by newlines, commas, or bullets
+            text = text.strip("[]\"'")
+            pieces = []
+            for line in text.split("\n"):
+                line = line.strip(" -•\t")
+                if not line:
+                    continue
+                for chunk in line.replace(";", ",").split(","):
+                    chunk = chunk.strip(" -•\t\"'[]")
+                    if chunk:
+                        pieces.append(chunk)
+            
+            return pieces if pieces else []
+        
+        return []
+    
     def _build_profile_section(self, student_profile: Optional[StudentProfile]) -> str:
-        """Build a formatted string for the student profile section."""
+        """Build formatted student profile string."""
         if not student_profile:
             return "Student learning profile: (no data available)"
         
         parts = []
         if student_profile.strong_skills:
-            parts.append(f"  - Strong skills: {', '.join(student_profile.strong_skills[:10])}")
+            parts.append(f"Strong skills: {', '.join(student_profile.strong_skills[:10])}")
         if student_profile.weak_skills:
-            parts.append(f"  - Weak skills: {', '.join(student_profile.weak_skills[:10])}")
+            parts.append(f"Weak skills: {', '.join(student_profile.weak_skills[:10])}")
         if student_profile.course_progress:
-            parts.append(f"  - Course progress: {student_profile.course_progress}")
+            parts.append(f"Course progress: {student_profile.course_progress}")
         
-        if parts:
-            return "Student learning profile:\n" + "\n".join(parts)
-        return "Student learning profile: (no detailed data available)"
+        return "Student learning profile:\n  " + "\n  ".join(parts) if parts else "Student learning profile: (no detailed data)"
     
     def _build_ist_history_section(self, ist_history: List[IstHistoryItem]) -> str:
-        """Build a formatted string for the IST history section."""
+        """Build formatted IST history string."""
         if not ist_history:
             return "Recent IST events: (none available)"
         
         parts = []
-        # Show up to 5 most recent events
         for i, event in enumerate(ist_history[:5], 1):
-            skills_str = ", ".join(event.skills[:5])  # Limit skills shown per event
-            parts.append(
-                f"  {i}. Intent: {event.intent[:100]}...\n"
-                f"     Skills: {skills_str}\n"
-                f"     Trajectory: {len(event.trajectory)} steps"
-            )
+            skills_str = ", ".join(event.skills[:5])
+            parts.append(f"{i}. Intent: {event.intent[:80]}\n     Skills: {skills_str}")
         
-        return f"Recent IST events ({len(ist_history)} total):\n" + "\n".join(parts)
+        return f"Recent IST events ({len(ist_history)} total):\n  " + "\n  ".join(parts)
     
     def _build_chat_history_section(self, chat_history: List[ChatMessage]) -> str:
-        """Build a formatted string for the chat history section."""
+        """Build formatted chat history string."""
         if not chat_history:
             return "Recent chat history: (none available)"
         
         parts = []
-        # Show up to 10 most recent messages
         for msg in chat_history[-10:]:
-            role_emoji = {
-                "student": "👤",
-                "tutor": "🤖",
-                "system": "⚙️"
-            }.get(msg.role, "•")
-            content_preview = msg.content[:150] + "..." if len(msg.content) > 150 else msg.content
-            parts.append(f"  {role_emoji} [{msg.role}]: {content_preview}")
+            role_emoji = {"student": "👤", "tutor": "🤖", "system": "⚙️"}.get(msg.role, "•")
+            content_preview = msg.content[:100] + "..." if len(msg.content) > 100 else msg.content
+            parts.append(f"{role_emoji} [{msg.role}]: {content_preview}")
         
-        return f"Recent chat history ({len(chat_history)} messages):\n" + "\n".join(parts)
+        return f"Recent chat history ({len(chat_history)} messages):\n  " + "\n  ".join(parts)
 
 
 # ---------------------------------------------------------------------

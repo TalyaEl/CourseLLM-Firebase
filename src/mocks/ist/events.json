@@ -1,0 +1,853 @@
+[
+  {
+    "id": "1",
+    "createdAt": "2025-12-11T11:29:57.474Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "hi",
+    "courseContext": "Title: Module 1: Arrays & Strings\nContent: Markdown content for Arrays and Strings. Covers operations, complexity analysis, and common problems.\n\n---\n\nTitle: Module 2: Linked Lists\nContent: A document...",
+    "intent": "The student is looking for help with linked lists and possibly Big-O notation.",
+    "skills": [
+      "Big-O notation",
+      "linked lists",
+      "algorithm analysis"
+    ],
+    "trajectory": [
+      "Review the definition and examples of linked lists.",
+      "Explore operations on linked lists (insertion, deletion).",
+      "Learn about Big-O notation specifically in the context of linked lists."
+    ]
+  },
+  {
+    "id": "2",
+    "createdAt": "2025-12-11T11:30:30.780Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": ">?what day is it",
+    "courseContext": "Title: Module 1: Arrays & Strings\nContent: Markdown content for Arrays and Strings. Covers operations, complexity analysis, and common problems.\n\n---\n\nTitle: Module 2: Linked Lists\nContent: A document...",
+    "intent": "The student is inquiring about the current date.",
+    "skills": [
+      "Understand: The student is inquiring about the current date."
+    ],
+    "trajectory": [
+      "Review the relevant lecture notes or slides.",
+      "Watch a short explanation video on this topic.",
+      "Solve 1–3 simple practice problems about this topic."
+    ]
+  },
+  {
+    "id": "3",
+    "createdAt": "2025-12-11T11:31:01.984Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "does this course teach python?",
+    "courseContext": "Title: Module 1: Arrays & Strings\nContent: Markdown content for Arrays and Strings. Covers operations, complexity analysis, and common problems.\n\n---\n\nTitle: Module 2: Linked Lists\nContent: A document...",
+    "intent": "The student is asking whether the course includes Python programming instruction.",
+    "skills": [
+      "Python programming",
+      "algorithms",
+      "data structures",
+      "Big-O notation",
+      "linked lists"
+    ],
+    "trajectory": [
+      "Request clarification on Python content in the syllabus",
+      "Review foundational Python concepts for algorithms",
+      "Engage in practice problems focusing on Big-O notation and linked lists"
+    ]
+  },
+  {
+    "id": "4",
+    "createdAt": "2025-12-11T11:34:31.622Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "does this course teach pythion?",
+    "courseContext": "Title: Module 1: Arrays & Strings\nContent: Markdown content for Arrays and Strings. Covers operations, complexity analysis, and common problems.\n\n---\n\nTitle: Module 2: Linked Lists\nContent: A document...",
+    "intent": "The student is asking if the course teaches Python programming.",
+    "skills": [
+      "Python programming",
+      "algorithms",
+      "data structures",
+      "Big-O notation",
+      "linked lists"
+    ],
+    "trajectory": [
+      "Review course syllabus for Python content",
+      "Explore resources on Python basics",
+      "Practice Python exercises related to arrays and strings",
+      "Engage in discussions about Python in relation to data structures"
+    ]
+  },
+  {
+    "id": "5",
+    "createdAt": "2025-12-11T11:35:56.075Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "hi",
+    "courseContext": "Title: Module 1: Arrays & Strings\nContent: Markdown content for Arrays and Strings. Covers operations, complexity analysis, and common problems.\n\n---\n\nTitle: Module 2: Linked Lists\nContent: A document...",
+    "intent": "The student is greeting the tutor and may be looking for further assistance with course material.",
+    "skills": [
+      "Big-O notation",
+      "linked lists",
+      "algorithm analysis"
+    ],
+    "trajectory": [
+      "Review Big-O notation in the context of linked lists.",
+      "Work through example problems involving linked lists and their complexity.",
+      "Seek clarification on specific concepts related to linked lists."
+    ]
+  },
+  {
+    "id": "6",
+    "createdAt": "2025-12-12T16:06:06.966Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "i python in the course plan?",
+    "courseContext": "Title: Module 1: Arrays & Strings\nContent: Markdown content for Arrays and Strings. Covers operations, complexity analysis, and common problems.\n\n---\n\nTitle: Module 2: Linked Lists\nContent: A document...",
+    "intent": "The student is asking whether Python is included in the course plan.",
+    "skills": [
+      "Python programming",
+      "arrays",
+      "strings",
+      "linked lists",
+      "algorithm analysis"
+    ],
+    "trajectory": [
+      "1. Confirm if Python programming is part of the course materials.",
+      "2. Review the sections on arrays and strings to understand their implementation in Python.",
+      "3. Begin practicing Python coding related to linked lists based on the course plan.",
+      "4. Explore additional resources or exercises on Python's data structures relevant to the course."
+    ]
+  },
+  {
+    "id": "7",
+    "createdAt": "2025-12-13T10:39:36.364Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "how do u do?",
+    "courseContext": "Title: Module 1: Arrays & Strings\nContent: Markdown content for Arrays and Strings. Covers operations, complexity analysis, and common problems.\n\n---\n\nTitle: Module 2: Linked Lists\nContent: A document...",
+    "intent": "The student is greeting the tutor and may be looking for assistance with the course material.",
+    "skills": [
+      "Big-O notation",
+      "linked lists",
+      "algorithm analysis"
+    ],
+    "trajectory": [
+      "Review Big-O notation concepts",
+      "Explore linked lists operations",
+      "Solve common problems related to arrays and strings"
+    ]
+  },
+  {
+    "id": "8",
+    "createdAt": "2025-12-13T10:39:48.229Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "lets begin with arrays",
+    "courseContext": "Title: Module 1: Arrays & Strings\nContent: Markdown content for Arrays and Strings. Covers operations, complexity analysis, and common problems.\n\n---\n\nTitle: Module 2: Linked Lists\nContent: A document...",
+    "intent": "The student wants to start learning about arrays.",
+    "skills": [
+      "arrays",
+      "operations",
+      "complexity analysis",
+      "common problems"
+    ],
+    "trajectory": [
+      "Read the module content on arrays and strings.",
+      "Practice array operations with example problems.",
+      "Analyze the complexity of common array algorithms.",
+      "Complete exercises related to arrays."
+    ]
+  },
+  {
+    "id": "9",
+    "createdAt": "2025-12-13T10:40:03.780Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "can you explain to me what an array is?",
+    "courseContext": "Title: Module 1: Arrays & Strings\nContent: Markdown content for Arrays and Strings. Covers operations, complexity analysis, and common problems.\n\n---\n\nTitle: Module 2: Linked Lists\nContent: A document...",
+    "intent": "The student wants to understand what an array is.",
+    "skills": [
+      "arrays",
+      "operations",
+      "complexity analysis",
+      "common problems"
+    ],
+    "trajectory": [
+      "Provide a definition of arrays and their characteristics.",
+      "Explain common operations that can be performed on arrays.",
+      "Discuss the complexity analysis of array operations.",
+      "Give examples of common problems involving arrays."
+    ]
+  },
+  {
+    "id": "10",
+    "createdAt": "2025-12-13T10:40:19.349Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "a list that is connected",
+    "courseContext": "Title: Module 1: Arrays & Strings\nContent: Markdown content for Arrays and Strings. Covers operations, complexity analysis, and common problems.\n\n---\n\nTitle: Module 2: Linked Lists\nContent: A document...",
+    "intent": "The student wants to understand how to work with linked lists in a connected manner.",
+    "skills": [
+      "linked lists",
+      "connections in data structures",
+      "operations on linked lists",
+      "Big-O notation",
+      "algorithm analysis"
+    ],
+    "trajectory": [
+      "Review the fundamentals of linked lists",
+      "Complete practice problems on linked lists operations",
+      "Learn about the different types of linked lists (singly, doubly, circular)",
+      "Explore the Big-O implications when dealing with linked lists",
+      "Implement a linked list in code to solidify understanding"
+    ]
+  },
+  {
+    "id": "11",
+    "createdAt": "2025-12-13T10:40:41.766Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "im not sure, in which week do we learn about this?",
+    "courseContext": "Title: Module 1: Arrays & Strings\nContent: Markdown content for Arrays and Strings. Covers operations, complexity analysis, and common problems.\n\n---\n\nTitle: Module 2: Linked Lists\nContent: A document...",
+    "intent": "The student wants to know the week they will be learning about a specific topic.",
+    "skills": [
+      "arrays",
+      "strings",
+      "linked lists",
+      "Big-O notation",
+      "algorithm analysis"
+    ],
+    "trajectory": [
+      "Review the syllabus to identify the week for Arrays & Strings and Linked Lists.",
+      "Focus on understanding the operations and common problems associated with Arrays.",
+      "Prepare questions about Big-O notation and how it relates to linked lists for the next tutor session."
+    ]
+  },
+  {
+    "id": "12",
+    "createdAt": "2025-12-13T10:40:56.356Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "module 1",
+    "courseContext": "Title: Module 1: Arrays & Strings\nContent: Markdown content for Arrays and Strings. Covers operations, complexity analysis, and common problems.\n\n---\n\nTitle: Module 2: Linked Lists\nContent: A document...",
+    "intent": "The student is asking for information or support regarding Module 1: Arrays & Strings.",
+    "skills": [
+      "arrays",
+      "strings",
+      "Big-O notation",
+      "algorithm analysis",
+      "operations on arrays and strings"
+    ],
+    "trajectory": [
+      "Review the content on arrays and strings in Module 1.",
+      "Focus on Big-O notation as it relates to arrays and strings.",
+      "Discuss common problems involving arrays and strings with the tutor.",
+      "Practice operations on arrays and strings through exercises."
+    ]
+  },
+  {
+    "id": "13",
+    "createdAt": "2025-12-13T11:01:52.923Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "does this course theach java?",
+    "courseContext": "Title: Week 1: Introduction\nContent: This is the content for the week 1 PDF. It covers basic syntax, variables, and data types in Python. We will learn how to write our first \"Hello, World!\" program.\n...",
+    "intent": "The student is inquiring whether the course covers Java programming language.",
+    "skills": [
+      "Java programming",
+      "Python basics",
+      "Syntax",
+      "Variables",
+      "Data types",
+      "Comparative programming languages",
+      "Course syllabus"
+    ],
+    "trajectory": [
+      "Check the course syllabus for language coverage",
+      "Discuss Java concepts if covered",
+      "Ask about transitioning from Python to Java",
+      "Explore resources for learning Java",
+      "Provide guidance on specific Java examples"
+    ]
+  },
+  {
+    "id": "14",
+    "createdAt": "2025-12-13T11:02:01.768Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "oh it teaches python",
+    "courseContext": "Title: Week 1: Introduction\nContent: This is the content for the week 1 PDF. It covers basic syntax, variables, and data types in Python. We will learn how to write our first \"Hello, World!\" program.\n...",
+    "intent": "The student is expressing awareness that the course teaches Python programming.",
+    "skills": [
+      "Python basics",
+      "syntax",
+      "variables",
+      "data types",
+      "programming concepts"
+    ],
+    "trajectory": [
+      "Review the Week 1 PDF on basic syntax, variables, and data types in Python.",
+      "Practice writing simple Python programs, including 'Hello, World!'.",
+      "Explore additional resources or exercises on Python basics.",
+      "Prepare questions about specific Python topics or concepts for the next tutoring session."
+    ]
+  },
+  {
+    "id": "15",
+    "createdAt": "2025-12-13T11:02:14.720Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "what is a string in python?",
+    "courseContext": "Title: Week 1: Introduction\nContent: This is the content for the week 1 PDF. It covers basic syntax, variables, and data types in Python. We will learn how to write our first \"Hello, World!\" program.\n...",
+    "intent": "The student is asking for a definition of a string in Python.",
+    "skills": [
+      "Python basics",
+      "data types",
+      "string manipulation",
+      "variables",
+      "basic syntax"
+    ],
+    "trajectory": [
+      "Review the definition and characteristics of strings in Python.",
+      "Explore string methods and operations.",
+      "Write examples of string manipulation in Python.",
+      "Discuss common use cases for strings in programming."
+    ]
+  },
+  {
+    "id": "16",
+    "createdAt": "2025-12-13T11:02:35.813Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "can you show me the progra?m",
+    "courseContext": "Title: Week 1: Introduction\nContent: This is the content for the week 1 PDF. It covers basic syntax, variables, and data types in Python. We will learn how to write our first \"Hello, World!\" program.\n...",
+    "intent": "The student is asking to see a program example in Python.",
+    "skills": [
+      "Python basics",
+      "syntax",
+      "variables",
+      "data types",
+      "programming concepts"
+    ],
+    "trajectory": [
+      "Review the 'Hello, World!' program in Python",
+      "Discuss basic syntax and structure of Python programs",
+      "Practice writing a simple Python program with variables and data types",
+      "Explore additional examples relevant to the topics covered"
+    ]
+  },
+  {
+    "id": "17",
+    "createdAt": "2025-12-13T11:03:11.641Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "dont recall",
+    "courseContext": "Title: Week 1: Introduction\nContent: This is the content for the week 1 PDF. It covers basic syntax, variables, and data types in Python. We will learn how to write our first \"Hello, World!\" program.\n...",
+    "intent": "The student is unable to recall specific information or concepts.",
+    "skills": [
+      "Python basics",
+      "syntax",
+      "variables",
+      "data types",
+      "programming concepts",
+      "Big-O notation",
+      "linked lists"
+    ],
+    "trajectory": [
+      "Review the basics of Python syntax and variables",
+      "Practice writing simple programs using data types",
+      "Explore Big-O notation with examples",
+      "Study linked lists and their operations in detail"
+    ]
+  },
+  {
+    "id": "18",
+    "createdAt": "2025-12-13T13:35:33.708Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "hello",
+    "courseContext": "Title: Module 1: Arrays & Strings\nContent: Markdown content for Arrays and Strings. Covers operations, complexity analysis, and common problems.\n\n---\n\nTitle: Module 2: Linked Lists\nContent: A document...",
+    "intent": "The student is greeting the tutor and may be looking to start a new topic or ask for help.",
+    "skills": [
+      "Big-O notation",
+      "linked lists",
+      "arrays",
+      "strings",
+      "algorithm complexity",
+      "data structures"
+    ],
+    "trajectory": [
+      "Review Big-O notation and its applications in algorithm analysis",
+      "Discuss key operations and properties of linked lists",
+      "Work through examples of linked list implementations",
+      "Solve linked list problems together",
+      "Explore similarities and differences between arrays and linked lists"
+    ]
+  },
+  {
+    "id": "19",
+    "createdAt": "2025-12-13T15:19:20.452Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "hello",
+    "courseContext": "Title: Module 1: Arrays & Strings\nContent: Markdown content for Arrays and Strings. Covers operations, complexity analysis, and common problems.\n\n---\n\nTitle: Module 2: Linked Lists\nContent: A document...",
+    "intent": "The student is greeting the tutor and may want to discuss their struggles or start a new topic.",
+    "skills": [
+      "Big-O notation",
+      "linked lists",
+      "arrays",
+      "strings",
+      "algorithm complexity"
+    ],
+    "trajectory": [
+      "Discuss the student's confusion with linked lists",
+      "Explore further examples of linked lists",
+      "Review Big-O notation in the context of linked lists",
+      "Perform practical exercises related to linked lists",
+      "Introduce basic implementations of linked lists in Python"
+    ]
+  },
+  {
+    "id": "20",
+    "createdAt": "2025-12-13T15:26:59.919Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "hello",
+    "courseContext": "Title: Module 1: Arrays & Strings\nContent: Markdown content for Arrays and Strings. Covers operations, complexity analysis, and common problems.\n\n---\n\nTitle: Module 2: Linked Lists\nContent: A document...",
+    "intent": "The student is greeting the tutor and may want to discuss their struggles or start a new topic.",
+    "skills": [
+      "Big-O notation",
+      "linked lists",
+      "arrays",
+      "strings",
+      "algorithm complexity"
+    ],
+    "trajectory": [
+      "Discuss specific challenges with linked lists",
+      "Review Big-O notation in detail",
+      "Explore practical examples of arrays and strings",
+      "Practice coding problems involving linked lists",
+      "Investigate common pitfalls in algorithm complexity analysis"
+    ]
+  },
+  {
+    "id": "21",
+    "createdAt": "2025-12-13T15:29:17.335Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "hello",
+    "courseContext": "Title: Module 1: Arrays & Strings\nContent: Markdown content for Arrays and Strings. Covers operations, complexity analysis, and common problems.\n\n---\n\nTitle: Module 2: Linked Lists\nContent: A document...",
+    "intent": "The student is greeting the tutor and may want to discuss their struggles or start a new topic.",
+    "skills": [
+      "Big-O notation",
+      "linked lists",
+      "arrays",
+      "strings",
+      "algorithm complexity"
+    ],
+    "trajectory": [
+      "Discuss challenges with linked lists",
+      "Review key concepts of Big-O notation",
+      "Explore practical applications of arrays and strings",
+      "Work on linked list exercises",
+      "Introduce more complex data structures"
+    ]
+  },
+  {
+    "id": "22",
+    "createdAt": "2025-12-13T15:32:44.780Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "hello",
+    "courseContext": "Title: Module 1: Arrays & Strings\nContent: Markdown content for Arrays and Strings. Covers operations, complexity analysis, and common problems.\n\n---\n\nTitle: Module 2: Linked Lists\nContent: A document...",
+    "intent": "The student is greeting the tutor and may want to discuss their previous challenges or start a new topic.",
+    "skills": [
+      "Big-O notation",
+      "linked lists",
+      "arrays",
+      "strings",
+      "algorithm complexity"
+    ],
+    "trajectory": [
+      "1. Discuss specific aspects of linked lists that the student finds challenging.",
+      "2. Review key operations and characteristics of linked lists.",
+      "3. Analyze examples of linked lists in programming or algorithms.",
+      "4. Compare linked lists to arrays to clarify differences and use cases.",
+      "5. Introduce practice problems related to linked lists to reinforce understanding."
+    ]
+  },
+  {
+    "id": "23",
+    "createdAt": "2025-12-17T16:32:32.299Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "hello",
+    "courseContext": "Title: Module 1: Arrays & Strings\nContent: Markdown content for Arrays and Strings. Covers operations, complexity analysis, and common problems.\n\n---\n\nTitle: Module 2: Linked Lists\nContent: A document...",
+    "intent": "The student is greeting the tutor and may be looking to start a new topic or ask for help with linked lists.",
+    "skills": [
+      "linked lists",
+      "Big-O notation",
+      "algorithm complexity",
+      "data structures",
+      "problem-solving"
+    ],
+    "trajectory": [
+      "Review the basics of linked lists and their operations",
+      "Practice problems involving linked list manipulations",
+      "Discuss the application of Big-O notation in linked list scenarios",
+      "Explore advanced topics like linked list variations",
+      "Review any outstanding questions or difficulties"
+    ]
+  },
+  {
+    "id": "24",
+    "createdAt": "2025-12-17T16:55:51.793Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "does this course teach java?",
+    "courseContext": "Title: Week 1: Introduction\nContent: This is the content for the week 1 PDF. It covers basic syntax, variables, and data types in Python. We will learn how to write our first \"Hello, World!\" program.\n...",
+    "intent": "The student is inquiring whether the course teaches Java.",
+    "skills": [
+      "Java programming",
+      "Python syntax",
+      "Data types",
+      "Variables",
+      "Basic programming concepts"
+    ],
+    "trajectory": [
+      "Review the course syllabus for topics covered",
+      "Discuss the main programming languages in the course",
+      "Clarify which language concepts are being taught in the current week",
+      "Explore resources for learning Java if not covered in the course"
+    ]
+  },
+  {
+    "id": "25",
+    "createdAt": "2025-12-17T16:56:22.179Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "why not?",
+    "courseContext": "Title: Week 1: Introduction\nContent: This is the content for the week 1 PDF. It covers basic syntax, variables, and data types in Python. We will learn how to write our first \"Hello, World!\" program.\n...",
+    "intent": "Inquiring about a specific aspect of learning or course content.",
+    "skills": [
+      "Big-O notation",
+      "linked lists",
+      "algorithm complexity",
+      "data structures",
+      "problem-solving"
+    ],
+    "trajectory": [
+      "1. Clarify specific confusion regarding Big-O notation.",
+      "2. Study the properties and operations of linked lists.",
+      "3. Solve practical problems involving linked lists.",
+      "4. Relate concepts of Big-O notation to linked list operations.",
+      "5. Practice additional data structure problems to reinforce learning."
+    ]
+  },
+  {
+    "id": "26",
+    "createdAt": "2025-12-17T16:57:07.749Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "what is a string in python?",
+    "courseContext": "Title: Week 1: Introduction\nContent: This is the content for the week 1 PDF. It covers basic syntax, variables, and data types in Python. We will learn how to write our first \"Hello, World!\" program.\n...",
+    "intent": "The student is asking for clarification about the concept of strings in Python.",
+    "skills": [
+      "strings",
+      "Python syntax",
+      "data types",
+      "variables",
+      "basic programming concepts"
+    ],
+    "trajectory": [
+      "Review the definition and characteristics of strings in Python.",
+      "Practice creating and manipulating strings with examples.",
+      "Explore other data types in Python to compare with strings.",
+      "Work on simple exercises involving string operations."
+    ]
+  },
+  {
+    "id": "27",
+    "createdAt": "2025-12-17T17:02:59.392Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "in what language is the course taught in?",
+    "courseContext": "Title: Module 1: Arrays & Strings\nContent: Markdown content for Arrays and Strings. Covers operations, complexity analysis, and common problems.\n\n---\n\nTitle: Module 2: Linked Lists\nContent: A document...",
+    "intent": "The student wants to know the language of instruction for the course.",
+    "skills": [
+      "course language",
+      "programming languages",
+      "course structure"
+    ],
+    "trajectory": [
+      "confirm the course language",
+      "provide an overview of languages used in the course",
+      "explain any additional resources available in those languages"
+    ]
+  },
+  {
+    "id": "28",
+    "createdAt": "2025-12-17T17:09:16.622Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "hello",
+    "courseContext": "Title: Week 1: Introduction\nContent: This is the content for the week 1 PDF. It covers basic syntax, variables, and data types in Python. We will learn how to write our first \"Hello, World!\" program.\n...",
+    "intent": "The student is initiating a conversation and may want to start a new topic.",
+    "skills": [
+      "basic syntax",
+      "variables",
+      "data types",
+      "Python programming",
+      "program structure"
+    ],
+    "trajectory": [
+      "Review the basic syntax and structure of Python",
+      "Practice writing simple programs including 'Hello, World!'",
+      "Explore variables and data types in more depth",
+      "Attempt exercises related to these concepts",
+      "Seek help on any difficulties encountered in exercises"
+    ]
+  },
+  {
+    "id": "29",
+    "createdAt": "2025-12-17T17:09:53.611Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "is the coursre about java?",
+    "courseContext": "Title: Week 1: Introduction\nContent: This is the content for the week 1 PDF. It covers basic syntax, variables, and data types in Python. We will learn how to write our first \"Hello, World!\" program.\n...",
+    "intent": "The student is asking if the course is about Java programming.",
+    "skills": [
+      "Java programming",
+      "course topics",
+      "syntax",
+      "variables",
+      "data types",
+      "programming languages"
+    ],
+    "trajectory": [
+      "Confirm the programming language of the course",
+      "Provide resources comparing Java and Python",
+      "Suggest exercises for understanding syntax in both languages",
+      "Discuss key concepts and differences between Java and Python",
+      "Explore student preferences for programming languages in future lessons"
+    ]
+  },
+  {
+    "id": "30",
+    "createdAt": "2025-12-17T17:15:45.958Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "do u teach java?",
+    "courseContext": "Title: Week 1: Introduction\nContent: This is the content for the week 1 PDF. It covers basic syntax, variables, and data types in Python. We will learn how to write our first \"Hello, World!\" program.\n...",
+    "intent": "The student is inquiring if the course covers Java programming.",
+    "skills": [
+      "Java programming",
+      "course topics",
+      "syntax",
+      "variables",
+      "data types"
+    ],
+    "trajectory": [
+      "Clarify the main programming language of the course.",
+      "Discuss the differences between Java and Python regarding syntax and data types.",
+      "Introduce basic OOP principles in Java if relevant.",
+      "Provide resources for learning Java basics.",
+      "Assess understanding of course languages and concepts."
+    ]
+  },
+  {
+    "id": "31",
+    "createdAt": "2025-12-17T17:16:58.782Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "python?",
+    "courseContext": "Title: Week 1: Introduction\nContent: This is the content for the week 1 PDF. It covers basic syntax, variables, and data types in Python. We will learn how to write our first \"Hello, World!\" program.\n...",
+    "intent": "The student is asking about Python programming concepts covered in the course.",
+    "skills": [
+      "Python syntax",
+      "variables",
+      "data types",
+      "program structure",
+      "basic programming concepts"
+    ],
+    "trajectory": [
+      "Review basic syntax in Python",
+      "Learn about variables and their types",
+      "Practice writing simple Python programs",
+      "Complete exercises related to data types",
+      "Explore examples of 'Hello, World!' programs"
+    ]
+  },
+  {
+    "id": "32",
+    "createdAt": "2025-12-17T17:32:32.316Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "does this course teach python?",
+    "courseContext": "Title: Week 1: Introduction\nContent: This is the content for the week 1 PDF. It covers basic syntax, variables, and data types in Python. We will learn how to write our first \"Hello, World!\" program.\n...",
+    "intent": "The student is asking if the course teaches Python.",
+    "skills": [
+      "Python programming",
+      "basic syntax",
+      "variables",
+      "data types",
+      "program structure"
+    ],
+    "trajectory": [
+      "Review the week 1 content on basic syntax and variables",
+      "Practice writing a simple Python program",
+      "Explore additional resources on data types in Python",
+      "Ask about specific Python programming challenges or examples"
+    ]
+  },
+  {
+    "id": "33",
+    "createdAt": "2025-12-22T11:02:37.215Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "hi",
+    "courseContext": "Title: Week 1: Introduction\nContent: This is the content for the week 1 PDF. It covers basic syntax, variables, and data types in Python. We will learn how to write our first \"Hello, World!\" program.\n...",
+    "intent": "The student is greeting and indicating a desire to continue the discussion.",
+    "skills": [
+      "Python programming",
+      "basic syntax",
+      "variables",
+      "data types",
+      "program structure"
+    ],
+    "trajectory": [
+      "Review basic syntax and variables in Python",
+      "Practice writing simple Python programs",
+      "Explore the importance of data types in Python",
+      "Discuss common errors in Python programming"
+    ]
+  },
+  {
+    "id": "34",
+    "createdAt": "2025-12-22T11:03:30.658Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "hi",
+    "courseContext": "Title: Module 1: Arrays & Strings\nContent: Markdown content for Arrays and Strings. Covers operations, complexity analysis, and common problems.\n\n---\n\nTitle: Module 2: Linked Lists\nContent: A document...",
+    "intent": "The student is greeting and indicating they want to discuss the course further.",
+    "skills": [
+      "Big-O notation",
+      "linked lists",
+      "algorithm analysis",
+      "data structures",
+      "Python programming",
+      "problem-solving"
+    ],
+    "trajectory": [
+      "Clarify the concept of Big-O notation in detail.",
+      "Explore linked lists and their operations.",
+      "Work on problems involving linked lists.",
+      "Introduce complexity analysis related to linked lists.",
+      "Discuss additional data structures as needed."
+    ]
+  },
+  {
+    "id": "35",
+    "createdAt": "2025-12-22T11:05:32.102Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "what day is it?",
+    "courseContext": "Title: Module 1: Arrays & Strings\nContent: Markdown content for Arrays and Strings. Covers operations, complexity analysis, and common problems.\n\n---\n\nTitle: Module 2: Linked Lists\nContent: A document...",
+    "intent": "The student is asking for the current day.",
+    "skills": [
+      ":"
+    ],
+    "trajectory": [
+      ":"
+    ]
+  },
+  {
+    "id": "36",
+    "createdAt": "2025-12-22T11:06:24.755Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "?",
+    "courseContext": "Title: Week 1: Introduction\nContent: This is the content for the week 1 PDF. It covers basic syntax, variables, and data types in Python. We will learn how to write our first \"Hello, World!\" program.\n...",
+    "intent": "The student is asking for clarification or help on a topic.",
+    "skills": [
+      "Big-O notation",
+      "linked lists",
+      "algorithm complexity",
+      "data structures",
+      "Python programming",
+      "program syntax"
+    ],
+    "trajectory": [
+      "1. Review the basic principles of Big-O notation with additional examples. 2. Explore how linked lists are implemented in Python. 3. Practice writing algorithms that utilize both arrays and linked lists. 4. Solve problems involving algorithm complexity using Python."
+    ]
+  },
+  {
+    "id": "37",
+    "createdAt": "2025-12-22T11:07:51.983Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "the course is about python?",
+    "courseContext": "Title: Week 1: Introduction\nContent: This is the content for the week 1 PDF. It covers basic syntax, variables, and data types in Python. We will learn how to write our first \"Hello, World!\" program.\n...",
+    "intent": "The student is asking if the course focuses on Python programming.",
+    "skills": [
+      "Python programming",
+      "basic syntax",
+      "variables",
+      "data types",
+      "program structure"
+    ],
+    "trajectory": [
+      "Review the course syllabus for Python-related topics",
+      "Practice writing simple Python programs",
+      "Explore basic syntax and data types in Python",
+      "Understand control flow in Python",
+      "Start working on examples related to variables and data types"
+    ]
+  },
+  {
+    "id": "38",
+    "createdAt": "2025-12-22T11:53:24.697Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "hello",
+    "courseContext": "Title: Week 1: Introduction\nContent: This is the content for the week 1 PDF. It covers basic syntax, variables, and data types in Python. We will learn how to write our first \"Hello, World!\" program.\n...",
+    "intent": "The student is greeting and indicating a desire to discuss course content further.",
+    "skills": [
+      "Python programming",
+      "basic syntax",
+      "variables",
+      "data types",
+      "linked lists",
+      "Big-O notation"
+    ],
+    "trajectory": [
+      "Discuss the basics of Python syntax and writing a simple program like 'Hello, World!'",
+      "Review the concepts of variables and data types in Python",
+      "Provide an overview of linked lists and their operations",
+      "Explain Big-O notation in the context of algorithm performance",
+      "Introduce practical examples and exercises related to these topics"
+    ]
+  },
+  {
+    "id": "39",
+    "createdAt": "2025-12-22T11:54:01.314Z",
+    "userId": "demo-user-1",
+    "courseId": "cs-demo-101",
+    "utterance": "what does cover flow mean?",
+    "courseContext": "Title: Week 1: Introduction\nContent: This is the content for the week 1 PDF. It covers basic syntax, variables, and data types in Python. We will learn how to write our first \"Hello, World!\" program.\n...",
+    "intent": "The student is asking for the meaning of \"cover flow.\"",
+    "skills": [
+      "cover flow",
+      "user interface design",
+      "visualization techniques",
+      "data representation",
+      "interaction design"
+    ],
+    "trajectory": [
+      "Research the definition and examples of cover flow.",
+      "Explore how cover flow is used in user interface design.",
+      "Look for tutorials or resources on implementing cover flow in applications."
+    ]
+  }
+]

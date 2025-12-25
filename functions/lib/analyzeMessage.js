@@ -4,6 +4,7 @@ exports.analyzeMessage = void 0;
 const https_1 = require("firebase-functions/v2/https");
 const firebaseAdmin_1 = require("./firebaseAdmin");
 const istContextFromJson_1 = require("./istContextFromJson");
+const istContextFromDataConnect_1 = require("./istContextFromDataConnect");
 const istEventsClient_1 = require("./dataconnect/istEventsClient");
 /**
  * Call the DSPy microservice to extract real IST data.
@@ -112,24 +113,43 @@ function mapDspyToMessageAnalysis(dspyResponse, input) {
     };
 }
 async function runIstAnalysis(input) {
-    var _a, _b;
+    var _a, _b, _c;
     const isEmulator = process.env.FUNCTIONS_EMULATOR === 'true';
-    // Load IST context from JSON file when running in emulator
+    // Load IST context when running in emulator
     let chatHistory = [];
     let istHistory = [];
     if (isEmulator) {
         try {
-            const context = await (0, istContextFromJson_1.loadIstContextFromJson)({
+            console.log('[analyzeMessage] Attempting to load IST context from Data Connect');
+            const context = await (0, istContextFromDataConnect_1.loadIstContextFromDataConnect)({
                 userId: input.uid,
                 courseId: (_a = input.courseId) !== null && _a !== void 0 ? _a : undefined,
                 maxHistory: 5,
             });
             chatHistory = context.chatHistory;
             istHistory = context.istHistory;
+            console.log('[analyzeMessage] Loaded IST context from Data Connect, events:', istHistory.length);
         }
         catch (err) {
-            // Log but don't fail - context loading is optional
-            console.warn('[analyzeMessage] Failed to load IST context from JSON:', err);
+            console.warn('[analyzeMessage] Failed to load IST context from Data Connect, falling back to JSON:', err);
+        }
+        // If Data Connect returned no history, optionally fall back to JSON (for early runs)
+        if (istHistory.length === 0) {
+            try {
+                console.log('[analyzeMessage] Falling back to JSON IST context loader');
+                const context = await (0, istContextFromJson_1.loadIstContextFromJson)({
+                    userId: input.uid,
+                    courseId: (_b = input.courseId) !== null && _b !== void 0 ? _b : undefined,
+                    maxHistory: 5,
+                });
+                chatHistory = context.chatHistory;
+                istHistory = context.istHistory;
+                console.log('[analyzeMessage] Loaded IST context from JSON, events:', istHistory.length);
+            }
+            catch (err) {
+                // Log but don't fail - context loading is optional
+                console.warn('[analyzeMessage] Failed to load IST context from JSON:', err);
+            }
         }
     }
     // Call the real DSPy service with enriched context
@@ -139,7 +159,7 @@ async function runIstAnalysis(input) {
     try {
         await (0, istEventsClient_1.saveIstEventToDataConnect)({
             userId: input.uid,
-            courseId: (_b = input.courseId) !== null && _b !== void 0 ? _b : 'unknown-course',
+            courseId: (_c = input.courseId) !== null && _c !== void 0 ? _c : 'unknown-course',
             threadId: input.threadId,
             messageId: input.messageId,
             utterance: input.messageText,
@@ -156,7 +176,10 @@ async function runIstAnalysis(input) {
     // Map DSPy response to MessageAnalysis format
     return mapDspyToMessageAnalysis(dspyResponse, input);
 }
-exports.analyzeMessage = (0, https_1.onCall)(async (request) => {
+exports.analyzeMessage = (0, https_1.onCall)({
+    region: 'us-central1',
+    timeoutSeconds: 180,
+}, async (request) => {
     var _a, _b, _c;
     try {
         const isEmulator = process.env.FUNCTIONS_EMULATOR === 'true';

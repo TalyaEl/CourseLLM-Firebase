@@ -1,5 +1,5 @@
 import React from 'react';
-import AnalysisDemo from './pages/AnalysisDemo';
+import AnalysisDemo from './pages-backup-temp/AnalysisDemo';
 
 function App() {
   return (

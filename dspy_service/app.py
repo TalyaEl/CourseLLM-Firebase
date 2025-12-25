@@ -158,6 +158,13 @@ async def infer_intent_skill_trajectory(request: IntentSkillRequest) -> IntentSk
         # In DSPy v3, calling a Module directly invokes its __call__ method which calls forward()
         # STEP 5: Pass enriched context (chat_history, ist_history, student_profile) to the DSPy module
         try:
+            print(f"\n[IST] ========== STARTING IST EXTRACTION ==========")
+            print(f"[IST] Utterance: {request.utterance}")
+            print(f"[IST] Course context: {request.course_context or '(empty)'}")
+            print(f"[IST] Chat history size: {len(request.chat_history)}")
+            print(f"[IST] IST history size: {len(request.ist_history)}")
+            print(f"[IST] Student profile: {request.student_profile is not None}")
+            
             result = ist_extractor(
                 utterance=request.utterance,
                 course_context=request.course_context or "",
@@ -165,9 +172,17 @@ async def infer_intent_skill_trajectory(request: IntentSkillRequest) -> IntentSk
                 ist_history=request.ist_history,
                 student_profile=request.student_profile,
             )
-            print(f"[IST] Extract completed - result type: {type(result)}, keys: {list(result.keys()) if isinstance(result, dict) else 'N/A'}")
+            
+            print(f"[IST] ========== EXTRACTION COMPLETED ==========")
+            print(f"[IST] Result type: {type(result)}")
+            print(f"[IST] Result keys: {list(result.keys()) if isinstance(result, dict) else 'N/A'}")
+            if isinstance(result, dict):
+                print(f"[IST] Result['intent']: {result.get('intent', '(missing)')[:60]}...")
+                print(f"[IST] Result['skills']: {result.get('skills', '(missing)')}")
+                print(f"[IST] Result['trajectory']: {result.get('trajectory', '(missing)')}")
         except Exception as module_error:
             error_msg = f"IST extractor module call failed: {type(module_error).__name__}: {str(module_error)}"
+            print(f"\n[IST] ========== EXTRACTION FAILED ==========")
             print(f"[IST][ERROR] {error_msg}")
             print(f"[IST][ERROR] Module error traceback:\n{traceback.format_exc()}")
             raise
@@ -235,13 +250,18 @@ async def infer_intent_skill_trajectory(request: IntentSkillRequest) -> IntentSk
         raise
     except ValueError as e:
         error_msg = f"Validation error: {str(e)}"
+        print(f"[IST][ERROR] ❌ VALIDATION ERROR")
         print(f"[IST][ERROR] {error_msg}")
-        print(f"[IST][ERROR] Traceback:\n{traceback.format_exc()}")
+        print(f"[IST][ERROR] Traceback:")
+        print(traceback.format_exc())
         raise HTTPException(status_code=400, detail=error_msg)
     except Exception as e:
         error_msg = f"Internal server error: {type(e).__name__}: {str(e)}"
-        print(f"[IST][ERROR] {error_msg}")
-        print(f"[IST][ERROR] Full traceback:\n{traceback.format_exc()}")
+        print(f"\n[IST][ERROR] ❌ FATAL ERROR IN ENDPOINT")
+        print(f"[IST][ERROR] Exception type: {type(e).__name__}")
+        print(f"[IST][ERROR] Exception message: {str(e)}")
+        print(f"[IST][ERROR] Full traceback:")
+        print(traceback.format_exc())
         
         # Return a structured error response that matches our response model
         # This allows the frontend to at least get a valid response shape
@@ -275,5 +295,8 @@ async def startup_event():
 
 if __name__ == "__main__":
     import uvicorn
+    import sys
     # Run on port 8000 by default
-    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+    # disable reload on Windows for better compatibility
+    reload = False if sys.platform == "win32" else True
+    uvicorn.run(app, host="0.0.0.0", port=8000, reload=reload)

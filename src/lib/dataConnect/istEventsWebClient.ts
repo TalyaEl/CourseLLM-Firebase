@@ -36,7 +36,7 @@ function getOrInitDataConnect() {
 
   // Connect to emulator in development
   if (process.env.NEXT_PUBLIC_FIREBASE_USE_EMULATOR === "true") {
-    connectDataConnectEmulator(dc, "127.0.0.1", 9399);
+    connectDataConnectEmulator(dc, "localhost", 9400);
   }
 
   dataConnectInstance = dc;

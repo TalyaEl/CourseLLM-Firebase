@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,8 +8,9 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { Course } from "@/lib/types";
-import { FileText, Presentation, Upload, Trash2 } from 'lucide-react';
+import { FileText, Presentation, Upload, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { TeacherClassIstReport } from "./TeacherClassIstReport";
 
 export function CourseManagementClient({ course: initialCourse }: { course: Course }) {
   const [course, setCourse] = useState(initialCourse);
@@ -35,9 +36,10 @@ export function CourseManagementClient({ course: initialCourse }: { course: Cour
       </div>
 
       <Tabs defaultValue="materials">
-        <TabsList className="grid w-full grid-cols-2">
+        <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="materials">Course Materials</TabsTrigger>
           <TabsTrigger value="objectives">Learning Objectives</TabsTrigger>
+          <TabsTrigger value="ist-report">IST Class Report</TabsTrigger>
         </TabsList>
         <TabsContent value="materials">
           <Card>
@@ -49,28 +51,47 @@ export function CourseManagementClient({ course: initialCourse }: { course: Cour
               <div className="space-y-4">
                 <h3 className="font-semibold">Current Materials</h3>
                 <div className="space-y-2">
-                  {course.materials.map(material => (
-                    <div key={material.id} className="flex items-center gap-4 p-2 border rounded-lg">
-                      {material.type === 'PDF' || material.type === 'DOC' ? <FileText className="h-5 w-5 text-primary"/> : <Presentation className="h-5 w-5 text-primary"/>}
+                  {course.materials.map((material) => (
+                    <div
+                      key={material.id}
+                      className="flex items-center gap-4 p-2 border rounded-lg"
+                    >
+                      {material.type === "PDF" || material.type === "DOC" ? (
+                        <FileText className="h-5 w-5 text-primary" />
+                      ) : (
+                        <Presentation className="h-5 w-5 text-primary" />
+                      )}
                       <span className="flex-1 font-medium">{material.title}</span>
-                      <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded-full">{material.type}</span>
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-destructive">
+                      <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded-full">
+                        {material.type}
+                      </span>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8 text-muted-foreground hover:text-destructive"
+                      >
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>
                   ))}
-                   {course.materials.length === 0 && <p className="text-sm text-muted-foreground text-center py-4">No materials uploaded yet.</p>}
+                  {course.materials.length === 0 && (
+                    <p className="text-sm text-muted-foreground text-center py-4">
+                      No materials uploaded yet.
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="space-y-4 pt-4 border-t">
-                 <h3 className="font-semibold">Upload New Material</h3>
-                 <div className="grid w-full max-w-sm items-center gap-1.5">
-                    <Label htmlFor="material-file">File (PDF, PPT, DOC, MD)</Label>
-                    <div className="flex gap-2">
-                        <Input id="material-file" type="file" />
-                        <Button variant="secondary"><Upload className="mr-2 h-4 w-4"/> Upload</Button>
-                    </div>
-                 </div>
+                <h3 className="font-semibold">Upload New Material</h3>
+                <div className="grid w-full max-w-sm items-center gap-1.5">
+                  <Label htmlFor="material-file">File (PDF, PPT, DOC, MD)</Label>
+                  <div className="flex gap-2">
+                    <Input id="material-file" type="file" />
+                    <Button variant="secondary">
+                      <Upload className="mr-2 h-4 w-4" /> Upload
+                    </Button>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -79,7 +100,9 @@ export function CourseManagementClient({ course: initialCourse }: { course: Cour
           <Card>
             <CardHeader>
               <CardTitle>Learning Path Definition</CardTitle>
-              <CardDescription>Define the objectives, skills, and trajectories for this course.</CardDescription>
+              <CardDescription>
+                Define the objectives, skills, and trajectories for this course.
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
@@ -88,7 +111,9 @@ export function CourseManagementClient({ course: initialCourse }: { course: Cour
                   id="objectives"
                   placeholder="e.g., 1. Understand basic Python syntax..."
                   value={course.learningObjectives}
-                  onChange={(e) => setCourse(prev => ({...prev, learningObjectives: e.target.value}))}
+                  onChange={(e) =>
+                    setCourse((prev) => ({ ...prev, learningObjectives: e.target.value }))
+                  }
                   rows={4}
                 />
               </div>
@@ -98,7 +123,9 @@ export function CourseManagementClient({ course: initialCourse }: { course: Cour
                   id="skills"
                   placeholder="e.g., Problem-solving, Algorithmic thinking"
                   value={course.learningSkills}
-                  onChange={(e) => setCourse(prev => ({...prev, learningSkills: e.target.value}))}
+                  onChange={(e) =>
+                    setCourse((prev) => ({ ...prev, learningSkills: e.target.value }))
+                  }
                 />
               </div>
               <div className="space-y-2">
@@ -107,13 +134,19 @@ export function CourseManagementClient({ course: initialCourse }: { course: Cour
                   id="trajectories"
                   placeholder="e.g., Beginner -> Intermediate"
                   value={course.learningTrajectories}
-                  onChange={(e) => setCourse(prev => ({...prev, learningTrajectories: e.target.value}))}
+                  onChange={(e) =>
+                    setCourse((prev) => ({ ...prev, learningTrajectories: e.target.value }))
+                  }
                 />
               </div>
             </CardContent>
           </Card>
         </TabsContent>
+        <TabsContent value="ist-report">
+          <TeacherClassIstReport courseId={course.id} />
+        </TabsContent>
       </Tabs>
     </div>
   );
 }
+
