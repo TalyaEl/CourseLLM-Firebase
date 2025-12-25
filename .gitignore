@@ -1,10 +1,10 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # ============================================================================
-# Node.js / Next.js
+# 1. Dependency & Build Output (Node.js / Next.js)
 # ============================================================================
 
-# dependencies
+# Dependencies and lock files
 /node_modules
 functions/node_modules/
 /.pnp
@@ -14,40 +14,47 @@ functions/node_modules/
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
+package-lock.json
 
-# testing
-/coverage
-
-# next.js build output
+# Build and production output
 /.next/
 /out/
-
-# production
 /build
 /dist
+*.tsbuildinfo
 
-# misc
-.DS_Store
-*.pem
-
-# debug logs
+# Debug, Logs & Cache
+/coverage
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-
-# genkit
-.genkit/*
+*.log             # Added from the new version (catches all .log files)
 
 # ============================================================================
-# Python / DSPy Service
+# 2. Environment Variables & Secrets (NEVER COMMIT THESE!)
+# ============================================================================
+
+# Next.js environment variables (combined and simplified)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local         # Catches all .env.local variations
+.env* # Added from the new version (catches all .env files)
+
+# Python/DSPy service environment variables
+dspy_service/.env
+dspy_service/.env.local
+
+# Allow example env files for documentation (Negative rules)
+!.env.example
+!dspy_service/.env.example
+!.env.local.example # Added from the new version
+
+# ============================================================================
+# 3. Python / DSPy Service
 # ============================================================================
 
 # Python virtual environments
@@ -58,7 +65,7 @@ dspy_service/venv/
 env/
 ENV/
 
-# Python cache
+# Python cache and compiled files
 __pycache__/
 *.py[cod]
 *$py.class
@@ -68,54 +75,54 @@ __pycache__/
 *.egg-info/
 dist/
 build/
-
-# Pytest cache
 .pytest_cache/
 
 # ============================================================================
-# Environment Variables & Secrets (NEVER COMMIT THESE!)
+# 4. Specific Tooling & Services
 # ============================================================================
 
-# Next.js environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.env*.local
+# Vercel
+.vercel
 
-# Python/DSPy service environment variables
-dspy_service/.env
-dspy_service/.env.local
-
-# Allow example env files for documentation
-!.env.example
-!dspy_service/.env.example
-
-# ============================================================================
 # Firebase
-# ============================================================================
-
 firebase-debug.log
 firestore-debug.log
 firebase-debug.*.log
 
+<<<<<<< HEAD
+# TypeScript
+next-env.d.ts
+
+# Genkit
+.genkit/*
+
+# Dataconnect (Added from the new version)
+dataconnect/.dataconnect
+src/dataconnect-generated/
+src/dataconnect-admin-generated/
+=======
 dataconnect-debug.log
 pglite-debug.log
+>>>>>>> osher-pipeline-and-db-logic-completed
 
 # ============================================================================
-# IST Pipeline - Local Development Data
+# 5. Local Development Data & Misc
 # ============================================================================
 
 # JSON storage for demo mode (contains generated IST events)
 # Note: The actual events.json file is ignored, but events.json.example is committed
 src/mocks/ist/events.json
 
+<<<<<<< HEAD
+# Misc files
+*.pem
+=======
 # Allow the example file to be committed
 !src/mocks/ist/events.json.example
+>>>>>>> osher-pipeline-and-db-logic-completed
 
 # ============================================================================
-# Operating System Files
+# 6. Operating System Files (Deduplicated)
 # ============================================================================
 
 # macOS

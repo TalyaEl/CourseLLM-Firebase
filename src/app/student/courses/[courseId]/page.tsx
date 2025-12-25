@@ -11,15 +11,8 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { FileText, Presentation } from 'lucide-react';
 import { ChatPanel } from './_components/chat-panel';
 
-interface PageProps {
-  params: Promise<{ courseId: string }>;
-}
-
-export default async function CourseDetailPage({ params }: PageProps) {
-  const resolvedParams = await params;
-  const courseId = resolvedParams.courseId;
-
-  const course = getCourseById(courseId);
+export default function CourseDetailPage({ params }: { params: { courseId: string } }) {
+  const course = getCourseById(params.courseId);
 
   if (!course) {
     notFound();

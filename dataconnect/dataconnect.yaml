@@ -1,3 +1,18 @@
+<<<<<<< HEAD
+specVersion: "v1"
+serviceId: "coursellm-firebase"
+location: "us-central1"
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: "fdcdb"
+      cloudSql:
+        instanceId: "coursellm-firebase-fdc"
+        # schemaValidation: "STRICT"     # STRICT mode makes Postgres schema match Data Connect exactly.
+        # schemaValidation: "COMPATIBLE" # COMPATIBLE mode makes Postgres schema compatible with Data Connect.
+connectorDirs: ["./example"]
+=======
 # Minimal Firebase Data Connect service config for local development.
 specVersion: "1.0.0"
 serviceId: "coursewise-ist-service"
@@ -16,3 +31,4 @@ schema:
 # List of connector directories. Each MUST contain a connector.yaml file.
 connectorDirs:
   - "./connector"
+>>>>>>> osher-pipeline-and-db-logic-completed

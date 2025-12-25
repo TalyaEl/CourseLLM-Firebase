@@ -1,12 +1,60 @@
 {
-  "functions": {
-    "source": "functions"
-  },
   "emulators": {
-    "functions": {
-      "port": 5001
+    "dataconnect": {
+      "dataDir": "dataconnect/.dataconnect/pgliteData",
+      "port": 9400,
+      "host": "127.0.0.1"
+    },
+    "auth": {
+      "port": 9099,
+      "host": "127.0.0.1"
     },
     "firestore": {
+<<<<<<< HEAD
+      "port": 8081,
+      "host": "127.0.0.1"
+    },
+    "database": {
+      "port": 9005,
+      "host": "127.0.0.1"
+    },
+    "storage": {
+      "port": 9199,
+      "host": "127.0.0.1"
+    },
+    "ui": {
+      "enabled": true,
+      "port": 4000,
+      "host": "127.0.0.1"
+    },
+    "singleProjectMode": true
+  },
+  "dataconnect": {
+    "source": "dataconnect"
+  },
+  "firestore": {
+    "database": "(default)",
+    "location": "us-central1",
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "disallowLegacyRuntimeConfig": true,
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint",
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ]
+    }
+  ],
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "database": {
+    "rules": "database.rules.json"
+=======
       "port": 8080
     },
     "extensions": {
@@ -18,5 +66,6 @@
   },
   "dataconnect": {
     "source": "dataconnect"
+>>>>>>> osher-pipeline-and-db-logic-completed
   }
 }
